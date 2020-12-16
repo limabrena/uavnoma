@@ -66,22 +66,22 @@ for mc in range(N_mc):
     x_u =( rho_u*np.cos(theta_u))
     y_u =( rho_u*np.sin(theta_u))
  
-    h_ru = np.zeros(N_users)
+    h_rm = np.zeros(N_users)
     distance = np.zeros(N_users)
     # Generation channel coefficients with Rician fading
     for uu in range(N_users):   
        ch_coeff =(random.gauss(s,sigma)+ 1j*random.gauss(0,sigma)) # Gaussian Random Variables with mean=s and variance=sigma
        #ch_coeff = np.random.normal(s,sigma) + 1j*np.random.normal(0,sigma)
        distance[uu]= sqrt( (x_u[uu]-x_r)**2  + (y_u[uu]-y_r)**2   + z_height**2  )    # Euclidian distance
-       h_ru[uu] = ch_coeff/(sqrt((distance[uu])**path_loss_exp))      # Coefficient channel/distance
+       h_rm[uu] = ch_coeff/(sqrt((distance[uu])**path_loss_exp))      # Coefficient channel/distance
 
-    H_ru = np.sort(np.abs(h_ru)**0.5) # channel gain
+    H_rm = np.sort(np.abs(h_rm)**0.5) # channel gain
     sinr = np.zeros((len(snr_dB),N_users))
     inst_rate = np.zeros((len(snr_dB),N_users))
 
     for sn in range(0,len(snr_dB)):      
        for ii in range(0,N_users): 
-          sinr[sn,ii] = (snr_linear[sn]*H_ru[ii]*alpha_u[ii]) #/ (snr_linear[sn]*H_ru[ii]*np.sum(alpha_u[ii+1:N_users-1]) + ip_sic*np.sum(alpha_u[0:ii-1])) + 1)
+          sinr[sn,ii] = (snr_linear[sn]*H_rm[ii]*alpha_u[ii]) / (snr_linear[sn]*H_rm[ii]*np.sum( alpha_u[ii+1:N_users-1] + ip_sic*np.sum(alpha_u[0:ii-1]) ) + 1)
           inst_rate[sn,ii] = np.log(1+sinr[sn,ii])
          
           if (inst_rate[sn,ii]  < target_rate[ii]):
@@ -103,10 +103,11 @@ for mc in range(N_mc):
           out_probability_system[mc,sn] =0
 # Plots
 out_prob_mean = np.mean(out_probability_system,axis=0)
-plt.plot(snr_dB, out_prob_mean, 'b.-')
+plt.plot(snr_dB, out_prob_mean, 'b.-', label="Fixed Power Allocation")
 plt.yscale('log')
 plt.xlabel('SNR (dB)')
 plt.ylabel('Outage Probability')
-g_path = 'C:/Users/breen/Google Drive/PhD Lusofona/Research Software/project-research-software/out_prob.pdf'
+plt.legend(loc="upper right")
+g_path = 'C:/Users/breen/Google Drive/PhD Lusofona/Research Software//power-allocation-UAV-NOMA-RL-2users/figures/outage_prob.pdf'
 plt.savefig(g_path,bbox_inches='tight')
 plt.show()
