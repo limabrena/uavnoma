@@ -66,22 +66,22 @@ for mc in range(N_mc):
     x_u =( rho_u*np.cos(theta_u))
     y_u =( rho_u*np.sin(theta_u))
  
-    h_rm = np.zeros(N_users)
+    h_rn = np.zeros(N_users)
     distance = np.zeros(N_users)
     # Generation channel coefficients with Rician fading
     for uu in range(N_users):   
        ch_coeff =(random.gauss(s,sigma)+ 1j*random.gauss(0,sigma)) # Gaussian Random Variables with mean=s and variance=sigma
        #ch_coeff = np.random.normal(s,sigma) + 1j*np.random.normal(0,sigma)
        distance[uu]= sqrt( (x_u[uu]-x_r)**2  + (y_u[uu]-y_r)**2   + z_height**2  )    # Euclidian distance
-       h_rm[uu] = ch_coeff/(sqrt((distance[uu])**path_loss_exp))      # Coefficient channel/distance
+       h_rn[uu] = ch_coeff/(sqrt((distance[uu])**path_loss_exp))      # Coefficient channel/distance
 
-    H_rm = np.sort(np.abs(h_rm)**0.5) # channel gain
+    H_rn = np.sort(np.abs(h_rn)**0.5) # channel gain
     sinr = np.zeros((len(snr_dB),N_users))
     inst_rate = np.zeros((len(snr_dB),N_users))
 
     for sn in range(0,len(snr_dB)):      
        for ii in range(0,N_users): 
-          sinr[sn,ii] = (snr_linear[sn]*H_rm[ii]*alpha_u[ii]) / (snr_linear[sn]*H_rm[ii]*np.sum( alpha_u[ii+1:N_users-1] + ip_sic*np.sum(alpha_u[0:ii-1]) ) + 1)
+          sinr[sn,ii] = (snr_linear[sn]*H_rn[ii]*alpha_u[ii]) / (snr_linear[sn]*H_rn[ii]*np.sum( alpha_u[ii+1:N_users-1] + ip_sic*np.sum(alpha_u[0:ii-1]) ) + 1)
           inst_rate[sn,ii] = np.log(1+sinr[sn,ii])
          
           if (inst_rate[sn,ii]  < target_rate[ii]):
