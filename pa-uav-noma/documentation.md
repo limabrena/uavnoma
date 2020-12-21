@@ -1,42 +1,49 @@
+
 ---------------------------------
-## How can use this application? 
+### How can use this application? 
 
 
 - Download:
 
-		$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-RL-2users.git
+     Cloning the repository via terminal:
+	 
+		 $ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
 
-		Direct download ZIP in my git repository: limabrena/power-allocation-UAV-NOMA-RL-2users
+		
+     Download ZIP file directly in my git repository:
+	 
+	      https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
+		  
 	  
 - Usage: 
 
-	This implementation can be used as a study tool to understand the 
+	This application can be used as a study tool to understand the 
 	behavior of the achievable rate by two users and the influence
 	of the allocation of power coefficients in a UAV-NOMA system. 
 	The communication model presented is a base of UAV-NOMA principles and 
 	can be expanded to several other scenarios, such as massive MIMO, 
-	full-duplex communication, and others.
+	full-duplex communication, and others in order to 
+	improve the users' rate performance.
 		
 	The user can modify parameters and analyze the system's behavior. 
 	Based on this, new methods can be proposed to solve trajectory problems, 
-	power allocation, decoding order, and others in order to 
-	improve the users' rate performance.
+	power allocation, decoding order and others.
 	
 	Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
+	
+
 
 ----------------
-## Requirement
+### Requirement
 
 
-  The implementation requires Python 3.9+ to run.
-
-  The following libraries are required:
+The implementation requires Python 3.9+ to run.
+The following libraries are required:
 
  - `numpy` 
  - `matplotlib.pyplot`
  - `math`
  - `random`
-
 
 ---------------------------------------------
 ## Description of the Simulation Parameters 

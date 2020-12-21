@@ -13,13 +13,13 @@ Numerical results are presented.
 
      Cloning the repository via terminal:
 	 
-		 `$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git`
+		 $ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
 
 		
      Download ZIP file directly in my git repository:
 	 
-	      `https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip`
-
+	      https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
+		  
 	  
 - Usage: 
 
@@ -42,13 +42,13 @@ Numerical results are presented.
 
 To generate source code documentation, in the folder `pa-uav-noma`run: 
 
-		`pdoc3 --html --output-dir docs pa-uav-noma.py
+		pdoc3 --html --output-dir docs pa-uav-noma.py
 		
-and to access the documentation via localhost, run:
+and to access the documentation via http://localhost:8080, run:
 		
-        `pdoc3 --http : pa-uav-noma.py
+        pdoc3 --http : pa-uav-noma.py
 
-in this way, the documentation should  be accessible on http://localhost:8080.
+
 
 On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html)
 
