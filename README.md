@@ -7,8 +7,6 @@ Brena Lima.
 COPELABS, Lusófona University
 
 
-
-
 -------------------------
 ### Scenario Description:
 
@@ -23,8 +21,10 @@ In order to guarantee primary user's Quality-of-Service requirements, the UAV fi
 Then, the UAV decodes the message from the secondary user $$N_2$$ without experiencing any performance degradation due to the primary user.
 
 *Example:*
-`$$N_1$$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
-`$$N_2$$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
+
+	`$$N_1$$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
+
+	`$$N_2$$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
 
 Different levels of power coefficients must be allocated to each user's signal, so that users' QoS requirements are satisfied.
 
