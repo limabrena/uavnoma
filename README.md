@@ -1,9 +1,5 @@
 ## Power Allocation in UAV-NOMA System with Two-users
 
-[![Build Status](https://img.shields.io/github/workflow/status/pdoc3/pdoc/CI?style=for-the-badge)](https://github.com/pdoc3/pdoc/actions)
-[![Code Coverage](https://img.shields.io/codecov/c/gh/pdoc3/pdoc.svg?style=for-the-badge)](https://codecov.io/gh/pdoc3/pdoc)
-[![pdoc3 on PyPI](https://img.shields.io/pypi/v/pdoc3.svg?color=blue&style=for-the-badge)](https://pypi.org/project/pdoc3)
-
 A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users.
 
 Brena Lima.
