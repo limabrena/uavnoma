@@ -14,7 +14,7 @@ COPELABS, Lusófona University
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
-![System model.](figures/UAV_system_model.png)
+![System model.](pa-uav-noma/figures/UAV_system_model.png)
 
 In this scenario, a UAV is deployed as an air base station that communicates with two-user $$N_1$$ and $$N_2$$.  We consider that each node is equipped with a single antenna and both UAV and users operate in the half-duplex mode.
 The system is inspired on cognitive radio (CR) concept to decode the user's messages.
