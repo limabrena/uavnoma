@@ -27,30 +27,50 @@
 system between an area base station and two users.
 Initially, power allocation is employed manually.</p>
 <hr>
-<h2 id="how-can-use-this-application">How can use this application?</h2>
-<p>This application can be used as a study tool to understand the behavior of the rate achieved by two users in a UAV-NOMA system.
-The communication model presented can be expanded to several other scenarios,
-such as massive MIMO, full-duplex communication, multiples UAV, and others.</p>
+<h3 id="how-can-use-this-application">How can use this application?</h3>
 <ul>
-<li>Download:</li>
-<li>Install</li>
-<li>Use:</li>
+<li>
+<p>Download:</p>
+<p>Cloning the repository via terminal:</p>
+<pre><code> $ git clone &lt;https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git&gt;
+</code></pre>
+<p>Download ZIP file directly in my git repository:</p>
+<pre><code>  &lt;https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip&gt;
+</code></pre>
+</li>
+<li>
+<p>Usage: </p>
+<p>This application can be used as a study tool to understand the
+behavior of the achievable rate by two users and the influence
+of the allocation of power coefficients in a UAV-NOMA system.
+The communication model presented is a base of UAV-NOMA principles and
+can be expanded to several other scenarios, such as massive MIMO,
+full-duplex communication, and others in order to
+improve the users' rate performance.</p>
+<p>The user can modify parameters and analyze the system's behavior.
+Based on this, new methods can be proposed to solve trajectory problems,
+power allocation, decoding order and others.</p>
+<p>Example: when the Rician Factor <code>K=0</code>, fading is similar to Rayleigh's.</p>
+</li>
 </ul>
 <hr>
-<h2 id="requirement">Requirement:</h2>
-<p>The application requires Python 3.9+ to run.</p>
-<p>The following libraries are required:</p>
+<h3 id="requirement">Requirement</h3>
+<p>The implementation requires Python 3.9+ to run.
+The following libraries are required:</p>
 <ul>
 <li><code>numpy</code> </li>
 <li><code>matplotlib.pyplot</code></li>
 <li><code>math</code></li>
+<li><code>random</code></li>
 </ul>
 <hr>
-<h2 id="description-of-the-simulation-parameters">Description of the Simulation Parameters:</h2>
+<h2 id="description-of-the-simulation-parameters">Description of the Simulation Parameters</h2>
 <ul>
 <li><code>N_mc</code> (integer) : Monte Carlo Samples.</li>
-<li><code>N_users</code> (integer) : number of users (in this case, two users).</li>
-<li><code>snr_dB</code> (array of integer, size(0:2:40)) : signal-to-noise ration in dB.</li>
+<li><code>N_users</code> (integer) : number of users (in our case, two users).</li>
+<li><code>M_uav</code>(integer) : number of UAV
+(in our case, single uav).</li>
+<li><code>snr_dB</code> (array of integer, size[10:2:51]) : signal-to-noise ration in dB.</li>
 <li><code>path_loss_exp</code> (integer) : path loss exponent.</li>
 <li><code>P_los</code> (float) : total power of LOS path &amp; scattered paths.</li>
 <li><code>K</code> (integer) : Rician Factor.</li>
@@ -64,11 +84,25 @@ using: <code>ch_coeff=np.sqrt((np.random.normal(s,sigma)**2) + 1j*(np.random.nor
 <li><code>s</code> (float) : Non-Centrality Parameter (mean) of Rician distribution, obtained by <code>s=sqrt(K/(K+1)*P_los)</code>.</li>
 <li><code>sigma</code> (float) : Standard deviation of Rician distribution, obtained by <code>sigma = P_los/sqrt(2*(K+1))</code>.</li>
 <li><code>h_n</code> (array of float, size(N_users)) : channel coefficients over distance effects.</li>
-<li><code>channelGain</code> (array of float, size(N_users)) : channel gain <code>abs(h_n)^2</code> sorted in descending order <code>(H_1 &gt; H_2)</code>.</li>
+<li><code>channelGain</code> (array of float, size(N_users)) : channel gain <code>abs(h_n)^2</code> sorted in descending order (primary user &gt; secondary user).</li>
 </ul>
 <hr>
-<h2 id="algorithm-description">Algorithm description:</h2>
+<h2 id="performance-analysis-metrics">Performance analysis metrics</h2>
+<ul>
+<li>
+<p><code>Outage Probability:</code> the outage probability is estimated as the ratio between the number of outage events and
+the total number of Monte Carlo repetitions. An outage event happens when the supported user data rates for a particular
+instantaneous channel realization is less than the target data rate. </p>
+</li>
+<li>
+<p><code>Achievable Rate:</code> the achievable rate consists of the throughput of network users, while average achievable rate
+consists of the average throughput of all network users.</p>
+</li>
+</ul>
+<hr>
+<h2 id="adaptive-algorithm-description">Adaptive Algorithm description</h2>
 <p>Adaptive power allocation algorithm was not implemented in the present version.</p>
+<hr>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -94,6 +128,7 @@ import matplotlib.pyplot as plt
 import math
 
 
+
 # --------------- Paramenters ---------------
 N_mc = 10**4  # Monte Carlo samples
 N_users = 2       # Number of Users
@@ -110,17 +145,15 @@ s=np.sqrt(K/(K+1)*P_los) # Non-Centrality Parameter (mean)
 sigma=P_los/np.sqrt(2*(K+1)) # Standard deviation
 
 # Users&#39; Target Rate
-target_rate_primary_user = 0.5  # Target rate bits/s/Hertz  primary user
+target_rate_primary_user = 1.0  # Target rate bits/s/Hertz  primary user
 target_rate_secondary_user = 0.5  # Target rate bits/s/Hertz  secondary users
 
 
-powerCoeff = [0.7, 0.3] # Fixed power factor allocation NOMA
+powerCoeff = [0.8, 0.2] # Fixed power factor allocation NOMA for primary user and secondary user, respectively
 
 
-# Radius
-radius_uav = 1.0 # Fly trajectory in the area in meters
-radius_user= 2.0 # Distribution of users in the area in meters
-z_height = 30.0  # Height UAV in meters
+radius_uav = 1.0 # Fly trajectory of the UAV in meters
+radius_user= 2.0 # Distribution radius of users in the cell in meters.
 
 # Initialization of some arrays
 rate_us = np.zeros((N_mc,len(snr_dB)))
@@ -142,10 +175,21 @@ for mc in range(N_mc):
 
                 x_r: axis x | y_r: axis y | z_r: heigth
 
-         `theta_r:` randomly generate an angle  
+       `theta_r:` randomly generates an angle  
 
-         `rho_r:` radius in meter of fly trajectory UAV
-      &#39;&#39;&#39;
+       `rho_r:` radius in meter of fly trajectory UAV
+
+
+       `rho_u:` radius in meter of the area where users are distributed
+
+        Args:
+
+            umberUAV -- number of UAV.
+            radiusUAV -- fly trajectory of the UAV in meters. 
+       Return:   
+
+            x_r, y_r, z_r -- position in the axis x, axis y and heigth of the UAV.
+     &#39;&#39;&#39;
       theta_r = (np.random.rand(numberUAV,1)*(math.pi*2))
       rho_r = radiusUAV
       x_r =  (rho_r*np.cos(theta_r))
@@ -158,9 +202,18 @@ for mc in range(N_mc):
 
                x_u: axis x |  y_u: axis y | height is not considered
 
-         `theta_u:` randomly generate an angle  
+       `theta_u:` randomly generates an angle  
 
-         `rho_u:` radius in meter of the area where users are distributed
+       `rho_u:` radius in meter of the area where users are distributed
+
+        Args:
+
+            numberUsers -- number of users.
+            radiusUser -- distribution radius of users in the cell in meters.
+       Return:   
+
+            x_u, y_u -- position in the axis x and axis y of the n-th user.  
+
       &#39;&#39;&#39;
       theta_u = (np.random.rand(numberUsers,1))*(math.pi*2)
       rho_u = (sqrt(np.random.rand(numberUsers,1))*radiusUser)
@@ -176,30 +229,46 @@ for mc in range(N_mc):
    distance = np.zeros(N_users)
 
 
-   def generate_Channel(s,sigma,numberUser,user_AxisX, user_AxisY, uav_AxisX, uav_AxisY, path_loss_exp, uav_heigth):
-      &#39;&#39;&#39;Returns the sorting channel gains of the users over Rician Fading. The channel gains are sorted to identify
-       the primary user and secondary user.
-      
-         `ch_coeff:` calculating channel coefficients with Random Variable Rice of mean=s and variance=sigma.
+   def generate_Channel(s,sigma,numberUser,user_X, user_Y, uav_X, uav_Y, path_loss, uav_Z):
+     &#39;&#39;&#39;Returns the sorting channel gains of the users over Rician Fading. The channel gains are sorted to identify
+        the primary user and secondary user.
 
-         `distance:` calculating distance between UAV and users.
+        `ch_coeff:` calculating channel coefficients with Random Variable Rice of mean=s and variance=sigma.
 
-         `h_n:` calculates channel coefficients based on the distance.
+        `distance:` calculating distance between UAV and users.
+
+        `h_n:` calculates channel coefficients based on the distance.
 
          `channelGain:` calculates the channel gains and sorting in descending order.
 
                      Primary user:  channelGain[0]   -&gt; max value
 
-                     Secondary user:  channelGain[1] -&gt; min value         
-      &#39;&#39;&#39;
-      for uu in range(numberUser):  
+                     Secondary user:  channelGain[1] -&gt; min value    
+
+        Args:
+
+            s -- non-Centrality Parameter (mean).
+            sigma -- standard deviation.
+            numberUser -- number of user.
+            user_X -- position axis x of n-th user.
+            user_Y -- position axis y of n-th user.
+            uav_X -- position axis x of UAV.
+            uav_Y -- position axis y of UAV.
+            path_loss -- path loss exponent.
+            uav_z -- UAV heigth.
+       Return:   
+
+            channelGain -- sorted channel gain of the users.             
+       
+     &#39;&#39;&#39;
+     for uu in range(numberUser):  
 
          ch_coeff = np.sqrt( (np.random.normal(s,sigma)**2) + 1j*(np.random.normal(0,sigma)**2) )
-         distance[uu]= np.sqrt( (user_AxisX[uu]-uav_AxisX)**2  + (user_AxisY[uu]-uav_AxisY)**2   + uav_heigth**2  )
-         h_n[uu] = np.abs(ch_coeff/np.complex(sqrt(1+(distance[uu])**path_loss_exp),0))**2
+         distance[uu]= np.sqrt( (user_X[uu]-uav_X)**2  + (user_Y[uu]-uav_Y)**2   + uav_Z**2  )
+         h_n[uu] = np.abs(ch_coeff/np.complex(sqrt(1+(distance[uu])**path_loss),0))**2
 
-      channelGain = sorted(h_n, reverse=True)
-      return channelGain  
+     channelGain = sorted(h_n, reverse=True)
+     return channelGain  
 
    channelGainPrimary = np.max(generate_Channel(s,sigma,N_users,user_AxisX, user_AxisY, uav_AxisX, uav_AxisY, path_loss_exp, uav_heigth))
    channelGainSecondary = np.min(generate_Channel(s,sigma,N_users,user_AxisX, user_AxisY, uav_AxisX, uav_AxisY, path_loss_exp, uav_heigth))
@@ -217,16 +286,29 @@ for mc in range(N_mc):
    def calculate_Instantaneous_Rate(channelPri,channelSec,snrValues,power,target_RatePri):
       &#39;&#39;&#39;Returns the instantaneous achievable rate of the primary user and secondary user for all values of SNR in dB.
 
-          `sinr_primary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the primary user based on NOMA.
+         `sinr_primary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the primary user based on NOMA.
 
-          `inst_rate_primary:` calculates instantaneous rate of the primary user based on sinr_primary.
+         `inst_rate_primary:` calculates instantaneous rate of the primary user based on sinr_primary.
 
                If the calculated instantaneous rate does not reach the rate desired by the user, OMA is used in order to guarantee 
                the Quality-of-Service requirements. 
 
-          `sinr_secondary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the secondary user based on NOMA.
+         `sinr_secondary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the secondary user based on NOMA.
 
-          `inst_rate_secondary:` calculates instantaneous rate of the secondary user based on sinr_secondary.
+         `inst_rate_secondary:` calculates instantaneous rate of the secondary user based on sinr_secondary.
+ 
+ 
+        Args:
+
+            channelPri -- channel gain of the primary user
+            channelSec -- channel gain of the secondary user.
+            snrValues -- SNR values in dB.
+            power --  power coefficient allocation.
+            target_RatePri -- target rate of the primary user.
+       Return:   
+            
+            inst_rate_primary -- instantaneous achievable rate of the primary user.
+            inst_rate_secondary -- instantaneous achievable rate of the secondary user.   
       &#39;&#39;&#39;
       for sn in range(0,len(snrValues)):    
 
@@ -267,9 +349,10 @@ for mc in range(N_mc):
       # Calculating of average achievable rate  of the system
       average_rate[mc,sn] = (instantaneous_rate_primary[mc,sn]+instantaneous_rate_secondary[mc,sn])/2 # Average achievable rate in bits/s/Hz
 
-&#39;&#39;&#39;
 #------- FIGURES --------
-# Outage Probability Plot
+&#39;&#39;&#39; # To plot the figures, this comment must be removed.
+
+# Outage Probability 
 
 out_prob_mean = np.mean(out_probability_system, axis=0) # Outage probability of the System
 out_prob_primary = np.mean(out_probability_primary_user, axis=0) # Outage probability of the Primary User
@@ -285,11 +368,12 @@ plt.ylabel(&#39;Outage Probability&#39;)
 plt.legend(loc=&#34;lower left&#34;)
 plt.xlim(10,50)
 
-# Saving outage probability values in .txt
-#print(&#39;Outage probability system:&#39;, out_prob_mean, &#39;\n\nOutage probability primary user:&#39;, out_prob_primary, &#39;\n\nOutage probability secondary user:&#39;, out_prob_secondary, file=open(&#34;outage_prob_values.txt&#34;, &#34;w&#34;))
+
+#Saving outage probability values in .txt
+#print(&#39;Outage probability system:&#39;, out_prob_mean, &#39;\n\nOutage probability primary user:&#39;, out_prob_primary, &#39;\n\nOutage probability secondary user:&#39;, out_prob_secondary, file=open(&#34;pa-uav-noma/outage_prob_values.txt&#34;, &#34;w&#34;))
 
 
-# Average Rate Plot
+# Average Achievable Rate 
 average_rate_mean = np.mean(average_rate, axis=0) # Average achievable rate of the system
 plt.figure()
 plt.plot(snr_dB, average_rate_mean, &#39;r.-&#39;, label=&#34;Fixed PA&#34;, linewidth=2)
@@ -307,6 +391,10 @@ plt.xlim(10,50)
 plt.xlabel(&#39;SNR (dB)&#39;)
 plt.ylabel(&#39;Achievable rate (bits/s/Hz)&#39;)
 plt.legend(loc=&#34;upper left&#34;)
+
+# Saving achievable rate values in .txt
+#print(&#39; Average Achievable Rate of the System:&#39;, average_rate_mean, &#39;\n\nAverage achievable rate of the Primary User:&#39;, rate_mean_primary_user, &#39;\n\nAverage achievable rate of the Secondary User:&#39;, rate_mean_secondary_user, file=open(&#34;pa-uav-noma/achievable_rate_values.txt&#34;, &#34;w&#34;))
+
 
 plt.show()
 &#39;&#39;&#39;</code></pre>
@@ -326,11 +414,23 @@ plt.show()
 <div class="desc"><p>Returns the instantaneous achievable rate of the primary user and secondary user for all values of SNR in dB.</p>
 <p><code>sinr_primary:</code> generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the primary user based on NOMA.</p>
 <p><code>inst_rate_primary:</code> calculates instantaneous rate of the primary user based on sinr_primary.</p>
-<pre><code> If the calculated instantaneous rate does not reach the rate desired by the user, OMA is used in order to guarantee 
- the Quality-of-Service requirements.
+<pre><code>    If the calculated instantaneous rate does not reach the rate desired by the user, OMA is used in order to guarantee 
+    the Quality-of-Service requirements.
 </code></pre>
 <p><code>sinr_secondary:</code> generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the secondary user based on NOMA.</p>
-<p><code>inst_rate_secondary:</code> calculates instantaneous rate of the secondary user based on sinr_secondary.</p></div>
+<p><code>inst_rate_secondary:</code> calculates instantaneous rate of the secondary user based on sinr_secondary.</p>
+<p>Args:</p>
+<pre><code> channelPri -- channel gain of the primary user
+ channelSec -- channel gain of the secondary user.
+ snrValues -- SNR values in dB.
+ power --  power coefficient allocation.
+ target_RatePri -- target rate of the primary user.
+</code></pre>
+<p>Return:
+</p>
+<pre><code> inst_rate_primary -- instantaneous achievable rate of the primary user.
+ inst_rate_secondary -- instantaneous achievable rate of the secondary user.
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -338,16 +438,29 @@ plt.show()
 <pre><code class="python">def calculate_Instantaneous_Rate(channelPri,channelSec,snrValues,power,target_RatePri):
    &#39;&#39;&#39;Returns the instantaneous achievable rate of the primary user and secondary user for all values of SNR in dB.
 
-       `sinr_primary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the primary user based on NOMA.
+      `sinr_primary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the primary user based on NOMA.
 
-       `inst_rate_primary:` calculates instantaneous rate of the primary user based on sinr_primary.
+      `inst_rate_primary:` calculates instantaneous rate of the primary user based on sinr_primary.
 
             If the calculated instantaneous rate does not reach the rate desired by the user, OMA is used in order to guarantee 
             the Quality-of-Service requirements. 
 
-       `sinr_secondary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the secondary user based on NOMA.
+      `sinr_secondary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the secondary user based on NOMA.
 
-       `inst_rate_secondary:` calculates instantaneous rate of the secondary user based on sinr_secondary.
+      `inst_rate_secondary:` calculates instantaneous rate of the secondary user based on sinr_secondary.
+
+
+     Args:
+
+         channelPri -- channel gain of the primary user
+         channelSec -- channel gain of the secondary user.
+         snrValues -- SNR values in dB.
+         power --  power coefficient allocation.
+         target_RatePri -- target rate of the primary user.
+    Return:   
+         
+         inst_rate_primary -- instantaneous achievable rate of the primary user.
+         inst_rate_secondary -- instantaneous achievable rate of the secondary user.   
    &#39;&#39;&#39;
    for sn in range(0,len(snrValues)):    
 
@@ -365,7 +478,7 @@ plt.show()
 </details>
 </dd>
 <dt id="pa-uav-noma.generate_Channel"><code class="name flex">
-<span>def <span class="ident">generate_Channel</span></span>(<span>s, sigma, numberUser, user_AxisX, user_AxisY, uav_AxisX, uav_AxisY, path_loss_exp, uav_heigth)</span>
+<span>def <span class="ident">generate_Channel</span></span>(<span>s, sigma, numberUser, user_X, user_Y, uav_X, uav_Y, path_loss, uav_Z)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the sorting channel gains of the users over Rician Fading. The channel gains are sorted to identify
@@ -377,35 +490,66 @@ the primary user and secondary user.</p>
 <pre><code>          Primary user:  channelGain[0]   -&gt; max value
 
           Secondary user:  channelGain[1] -&gt; min value
+</code></pre>
+<p>Args:</p>
+<pre><code> s -- non-Centrality Parameter (mean).
+ sigma -- standard deviation.
+ numberUser -- number of user.
+ user_X -- position axis x of n-th user.
+ user_Y -- position axis y of n-th user.
+ uav_X -- position axis x of UAV.
+ uav_Y -- position axis y of UAV.
+ path_loss -- path loss exponent.
+ uav_z -- UAV heigth.
+</code></pre>
+<p>Return:
+</p>
+<pre><code> channelGain -- sorted channel gain of the users.
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generate_Channel(s,sigma,numberUser,user_AxisX, user_AxisY, uav_AxisX, uav_AxisY, path_loss_exp, uav_heigth):
-   &#39;&#39;&#39;Returns the sorting channel gains of the users over Rician Fading. The channel gains are sorted to identify
-    the primary user and secondary user.
-   
-      `ch_coeff:` calculating channel coefficients with Random Variable Rice of mean=s and variance=sigma.
+<pre><code class="python">def generate_Channel(s,sigma,numberUser,user_X, user_Y, uav_X, uav_Y, path_loss, uav_Z):
+  &#39;&#39;&#39;Returns the sorting channel gains of the users over Rician Fading. The channel gains are sorted to identify
+     the primary user and secondary user.
 
-      `distance:` calculating distance between UAV and users.
+     `ch_coeff:` calculating channel coefficients with Random Variable Rice of mean=s and variance=sigma.
 
-      `h_n:` calculates channel coefficients based on the distance.
+     `distance:` calculating distance between UAV and users.
+
+     `h_n:` calculates channel coefficients based on the distance.
 
       `channelGain:` calculates the channel gains and sorting in descending order.
 
                   Primary user:  channelGain[0]   -&gt; max value
 
-                  Secondary user:  channelGain[1] -&gt; min value         
-   &#39;&#39;&#39;
-   for uu in range(numberUser):  
+                  Secondary user:  channelGain[1] -&gt; min value    
+
+     Args:
+
+         s -- non-Centrality Parameter (mean).
+         sigma -- standard deviation.
+         numberUser -- number of user.
+         user_X -- position axis x of n-th user.
+         user_Y -- position axis y of n-th user.
+         uav_X -- position axis x of UAV.
+         uav_Y -- position axis y of UAV.
+         path_loss -- path loss exponent.
+         uav_z -- UAV heigth.
+    Return:   
+
+         channelGain -- sorted channel gain of the users.             
+    
+  &#39;&#39;&#39;
+  for uu in range(numberUser):  
 
       ch_coeff = np.sqrt( (np.random.normal(s,sigma)**2) + 1j*(np.random.normal(0,sigma)**2) )
-      distance[uu]= np.sqrt( (user_AxisX[uu]-uav_AxisX)**2  + (user_AxisY[uu]-uav_AxisY)**2   + uav_heigth**2  )
-      h_n[uu] = np.abs(ch_coeff/np.complex(sqrt(1+(distance[uu])**path_loss_exp),0))**2
+      distance[uu]= np.sqrt( (user_X[uu]-uav_X)**2  + (user_Y[uu]-uav_Y)**2   + uav_Z**2  )
+      h_n[uu] = np.abs(ch_coeff/np.complex(sqrt(1+(distance[uu])**path_loss),0))**2
 
-   channelGain = sorted(h_n, reverse=True)
-   return channelGain  </code></pre>
+  channelGain = sorted(h_n, reverse=True)
+  return channelGain  </code></pre>
 </details>
 </dd>
 <dt id="pa-uav-noma.random_Position_UAV"><code class="name flex">
@@ -413,11 +557,20 @@ the primary user and secondary user.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a random UAV position based on 3D Cartesian coordinates.</p>
-<pre><code>   x_r: axis x | y_r: axis y | z_r: heigth
+<pre><code>     x_r: axis x | y_r: axis y | z_r: heigth
 </code></pre>
-<p><code>theta_r:</code> randomly generate an angle
+<p><code>theta_r:</code> randomly generates an angle
 </p>
-<p><code>rho_r:</code> radius in meter of fly trajectory UAV</p></div>
+<p><code>rho_r:</code> radius in meter of fly trajectory UAV</p>
+<p><code>rho_u:</code> radius in meter of the area where users are distributed</p>
+<p>Args:</p>
+<pre><code> umberUAV -- number of UAV.
+ radiusUAV -- fly trajectory of the UAV in meters.
+</code></pre>
+<p>Return:
+</p>
+<pre><code> x_r, y_r, z_r -- position in the axis x, axis y and heigth of the UAV.
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -427,10 +580,21 @@ the primary user and secondary user.</p>
 
              x_r: axis x | y_r: axis y | z_r: heigth
 
-      `theta_r:` randomly generate an angle  
+    `theta_r:` randomly generates an angle  
 
-      `rho_r:` radius in meter of fly trajectory UAV
-   &#39;&#39;&#39;
+    `rho_r:` radius in meter of fly trajectory UAV
+
+
+    `rho_u:` radius in meter of the area where users are distributed
+
+     Args:
+
+         umberUAV -- number of UAV.
+         radiusUAV -- fly trajectory of the UAV in meters. 
+    Return:   
+
+         x_r, y_r, z_r -- position in the axis x, axis y and heigth of the UAV.
+  &#39;&#39;&#39;
    theta_r = (np.random.rand(numberUAV,1)*(math.pi*2))
    rho_r = radiusUAV
    x_r =  (rho_r*np.cos(theta_r))
@@ -444,11 +608,19 @@ the primary user and secondary user.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a random ground users position based on 2D Cartesian coordinates. </p>
-<pre><code>  x_u: axis x |  y_u: axis y | height is not considered
+<pre><code>    x_u: axis x |  y_u: axis y | height is not considered
 </code></pre>
-<p><code>theta_u:</code> randomly generate an angle
+<p><code>theta_u:</code> randomly generates an angle
 </p>
-<p><code>rho_u:</code> radius in meter of the area where users are distributed</p></div>
+<p><code>rho_u:</code> radius in meter of the area where users are distributed</p>
+<p>Args:</p>
+<pre><code> numberUsers -- number of users.
+ radiusUser -- distribution radius of users in the cell in meters.
+</code></pre>
+<p>Return:
+</p>
+<pre><code> x_u, y_u -- position in the axis x and axis y of the n-th user.
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -458,9 +630,18 @@ the primary user and secondary user.</p>
 
             x_u: axis x |  y_u: axis y | height is not considered
 
-      `theta_u:` randomly generate an angle  
+    `theta_u:` randomly generates an angle  
 
-      `rho_u:` radius in meter of the area where users are distributed
+    `rho_u:` radius in meter of the area where users are distributed
+
+     Args:
+
+         numberUsers -- number of users.
+         radiusUser -- distribution radius of users in the cell in meters.
+    Return:   
+
+         x_u, y_u -- position in the axis x and axis y of the n-th user.  
+
    &#39;&#39;&#39;
    theta_u = (np.random.rand(numberUsers,1))*(math.pi*2)
    rho_u = (sqrt(np.random.rand(numberUsers,1))*radiusUser)
@@ -479,9 +660,10 @@ the primary user and secondary user.</p>
 <div class="toc">
 <ul>
 <li><a href="#how-can-use-this-application">How can use this application?</a></li>
-<li><a href="#requirement">Requirement:</a></li>
-<li><a href="#description-of-the-simulation-parameters">Description of the Simulation Parameters:</a></li>
-<li><a href="#algorithm-description">Algorithm description:</a></li>
+<li><a href="#requirement">Requirement</a></li>
+<li><a href="#description-of-the-simulation-parameters">Description of the Simulation Parameters</a></li>
+<li><a href="#performance-analysis-metrics">Performance analysis metrics</a></li>
+<li><a href="#adaptive-algorithm-description">Adaptive Algorithm description</a></li>
 </ul>
 </div>
 <ul id="index">

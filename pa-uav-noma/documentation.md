@@ -75,7 +75,7 @@ The following libraries are required:
    the total number of Monte Carlo repetitions. An outage event happens when the supported user data rates for a particular 
    instantaneous channel realization is less than the target data rate. 
    
-- `Achievable Rate:` the achievable rate consists of the throughput of network users, while max-min achievable rate 
+- `Achievable Rate:` the achievable rate consists of the throughput of network users, while average achievable rate 
    consists of the average throughput of all network users.
 
 --------------------------------
