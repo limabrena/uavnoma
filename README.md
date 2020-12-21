@@ -67,7 +67,7 @@ The following libraries are required:
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
-![System model.](pa-uav-noma/figures/UAV_system_model.eps)
+![System model.](pa-uav-noma/figures/UAV_system_model.png)
 
 In this scenario, a UAV is deployed as an air base station that communicates with two-user $N_1$ and $N_2$.  
 For each Monte Carlo sample, users are randomly distributed in a 2D region (x-axis and y-axis). 
@@ -80,9 +80,9 @@ Then, the UAV decodes the message from the secondary user $N_2$ without experien
 
 *Example:*
 
-	`$N_1$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
+	 $N_1$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.
 
-	`$N_2$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
+	 $N_2$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.
 
 Different levels of power coefficients must be allocated to each user's signal, so that users' QoS requirements are satisfied.
 
