@@ -26,20 +26,6 @@
 <p>A Python 3.9 implementation of a model of wireless communication
 system between an area base station and two users.
 Initially, power allocation is employed manually.</p>
-<hr>
-<h3 id="how-can-use-this-application">How can use this application?</h3>
-<ul>
-<li>
-<p>Download:</p>
-<p>Cloning the repository via terminal:</p>
-<pre><code> $ git clone &lt;https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git&gt;
-</code></pre>
-<p>Download ZIP file directly in my git repository:</p>
-<pre><code>  &lt;https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip&gt;
-</code></pre>
-</li>
-<li>
-<p>Usage: </p>
 <p>This application can be used as a study tool to understand the
 behavior of the achievable rate by two users and the influence
 of the allocation of power coefficients in a UAV-NOMA system.
@@ -51,8 +37,6 @@ improve the users' rate performance.</p>
 Based on this, new methods can be proposed to solve trajectory problems,
 power allocation, decoding order and others.</p>
 <p>Example: when the Rician Factor <code>K=0</code>, fading is similar to Rayleigh's.</p>
-</li>
-</ul>
 <hr>
 <h3 id="requirement">Requirement</h3>
 <p>The implementation requires Python 3.9+ to run.
@@ -70,7 +54,7 @@ The following libraries are required:</p>
 <li><code>N_users</code> (integer) : number of users (in our case, two users).</li>
 <li><code>M_uav</code>(integer) : number of UAV
 (in our case, single uav).</li>
-<li><code>snr_dB</code> (array of integer, size[10:2:51]) : signal-to-noise ration in dB.</li>
+<li><code>snr_dB</code> (array of integer, size[10:2:51]) : signal-to-noise ratio in dB.</li>
 <li><code>path_loss_exp</code> (integer) : path loss exponent.</li>
 <li><code>P_los</code> (float) : total power of LOS path &amp; scattered paths.</li>
 <li><code>K</code> (integer) : Rician Factor.</li>
@@ -659,7 +643,6 @@ the primary user and secondary user.</p>
 <h1>Index</h1>
 <div class="toc">
 <ul>
-<li><a href="#how-can-use-this-application">How can use this application?</a></li>
 <li><a href="#requirement">Requirement</a></li>
 <li><a href="#description-of-the-simulation-parameters">Description of the Simulation Parameters</a></li>
 <li><a href="#performance-analysis-metrics">Performance analysis metrics</a></li>

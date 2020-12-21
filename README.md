@@ -42,11 +42,11 @@ Numerical results are presented.
 
 To generate source code documentation, in the folder `pa-uav-noma`run: 
 	
-	 pdoc3 --html --output-dir docs pa-uav-noma.py
+	 pdoc --html --output-dir docs pa-uav-noma.py
 		
 To access the documentation via http://localhost:8080, run:
 
-	 pdoc3 --http : pa-uav-noma.py
+	 pdoc --http : pa-uav-noma.py
 	 
 On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html).
  

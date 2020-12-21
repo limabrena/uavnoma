@@ -1,36 +1,17 @@
 
----------------------------------
-### How can use this application? 
-
-
-- Download:
-
-     Cloning the repository via terminal:
-	 
-		 $ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
-
-		
-     Download ZIP file directly in my git repository:
-	 
-	      https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
-		  
-	  
-- Usage: 
-
-	This application can be used as a study tool to understand the 
-	behavior of the achievable rate by two users and the influence
-	of the allocation of power coefficients in a UAV-NOMA system. 
-	The communication model presented is a base of UAV-NOMA principles and 
-	can be expanded to several other scenarios, such as massive MIMO, 
-	full-duplex communication, and others in order to 
-	improve the users' rate performance.
-		
-	The user can modify parameters and analyze the system's behavior. 
-	Based on this, new methods can be proposed to solve trajectory problems, 
-	power allocation, decoding order and others.
+This application can be used as a study tool to understand the 
+behavior of the achievable rate by two users and the influence
+of the allocation of power coefficients in a UAV-NOMA system. 
+The communication model presented is a base of UAV-NOMA principles and 
+can be expanded to several other scenarios, such as massive MIMO, 
+full-duplex communication, and others in order to 
+improve the users' rate performance.
 	
-	Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
-	
+The user can modify parameters and analyze the system's behavior. 
+Based on this, new methods can be proposed to solve trajectory problems, 
+power allocation, decoding order and others.
+
+Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
 
 
 ----------------
@@ -52,7 +33,7 @@ The following libraries are required:
  - `N_mc` (integer) : Monte Carlo Samples.
  - `N_users` (integer) : number of users (in our case, two users).
  - `M_uav`(integer) : number of UAV  (in our case, single uav).
- - `snr_dB` (array of integer, size[10:2:51]) : signal-to-noise ration in dB.
+ - `snr_dB` (array of integer, size[10:2:51]) : signal-to-noise ratio in dB.
  - `path_loss_exp` (integer) : path loss exponent.
  - `P_los` (float) : total power of LOS path & scattered paths.
  - `K` (integer) : Rician Factor.
@@ -77,6 +58,8 @@ The following libraries are required:
    
 - `Achievable Rate:` the achievable rate consists of the throughput of network users, while average achievable rate 
    consists of the average throughput of all network users.
+   
+To plot the figures, the comments at the beginning of the Figures section must be removed from the code.   
 
 --------------------------------
 ## Adaptive Algorithm description
