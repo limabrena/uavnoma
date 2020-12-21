@@ -29,11 +29,14 @@ The following libraries are required:
 
 
 - Download:
+
      Via terminal:
+	 
 		 `$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git`
 
 		
      Download ZIP file directly in my git repository:
+	 
 	      `https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip`
 
 	  
