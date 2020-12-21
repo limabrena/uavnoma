@@ -3,26 +3,7 @@
 A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users. 
 Numerical results are presented. 
 
-----------------
-### Documentation
 
-To generate source code documentation, in the folder `pa-uav-noma`run: 
-
-  `pdoc3 --html --output-dir docs pa-uav-noma.py
-
-or can be viewed in [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html)
-
-----------------
-### Requirement
-
-
-The implementation requires Python 3.9+ to run.
-The following libraries are required:
-
- - `numpy` 
- - `matplotlib.pyplot`
- - `math`
- - `random`
 
 ---------------------------------
 ### How can use this application? 
@@ -30,7 +11,7 @@ The following libraries are required:
 
 - Download:
 
-     Via terminal:
+     Cloning the repository via terminal:
 	 
 		 `$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git`
 
@@ -55,6 +36,33 @@ The following libraries are required:
 	power allocation, decoding order and others.
 	
 	Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
+	
+----------------
+### Documentation
+
+To generate source code documentation, in the folder `pa-uav-noma`run: 
+
+		`pdoc3 --html --output-dir docs pa-uav-noma.py
+		
+and to access the documentation via localhost, run:
+		
+        `pdoc3 --http : pa-uav-noma.py
+
+in this way, the documentation should  be accessible on http://localhost:8080.
+
+On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html)
+
+----------------
+### Requirement
+
+
+The implementation requires Python 3.9+ to run.
+The following libraries are required:
+
+ - `numpy` 
+ - `matplotlib.pyplot`
+ - `math`
+ - `random`
 
 -------------------------
 ### Scenario Description
