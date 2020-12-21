@@ -13,12 +13,12 @@ Numerical results are presented.
 
      Cloning the repository via terminal:
 	 
-		 $ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
+		 $ git clone [https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git](https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git)
 
 		
      Download ZIP file directly in my git repository:
 	 
-	      https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
+	      [https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip](https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip)
 		  
 	  
 - Usage: 
