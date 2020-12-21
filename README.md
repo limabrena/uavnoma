@@ -6,8 +6,9 @@ Numerical results are presented.
 ----------------
 ### Documentation
 
-To generate source code documentation, into file `pa-uav-noma`run: 
-`pdoc3 --html --
+To generate source code documentation, in the folder `pa-uav-noma`run: 
+
+  `pdoc3 --html --output-dir docs pa-uav-noma.py
 
 or can be viewed in [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html)
 
@@ -28,10 +29,13 @@ The following libraries are required:
 
 
 - Download:
+     Via terminal:
+		 $ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
 
-		$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-RL-2users.git
+		
+     Download ZIP file directly in my git repository:
+	      https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
 
-		Direct download ZIP in my git repository: limabrena/power-allocation-UAV-NOMA-RL-2users
 	  
 - Usage: 
 
