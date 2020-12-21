@@ -6,9 +6,8 @@ Brena Lima.
 
 COPELABS, Lusófona University
 
-[Documentation]
 
-[Documentation]: https://pdoc3.github.io/pdoc/doc/pdoc/
+
 
 -------------------------
 ### Scenario Description:
