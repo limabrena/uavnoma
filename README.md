@@ -1,35 +1,18 @@
 ## Power Allocation in UAV-NOMA System with Two-users
 
-A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users.
-
-Brena Lima.
-
-COPELABS, Lusófona University
-
-
--------------------------
-### Scenario Description:
-
-
-We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
-![System model.](pa-uav-noma/figures/UAV_system_model.png)
-
-In this scenario, a UAV is deployed as an air base station that communicates with two-user $$N_1$$ and $$N_2$$.  We consider that each node is equipped with a single antenna and both UAV and users operate in the half-duplex mode.
-The system is inspired on cognitive radio (CR) concept to decode the user's messages.
-Based on this, the user $$N_1$$ is viewed as the primary user and $$N_2$$ is viewed as secondary user.
-In order to guarantee primary user's Quality-of-Service requirements, the UAV first decodes the $$N_1$$'s message.
-Then, the UAV decodes the message from the secondary user $$N_2$$ without experiencing any performance degradation due to the primary user.
-
-*Example:*
-
-	`$$N_1$$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
-
-	`$$N_2$$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
-
-Different levels of power coefficients must be allocated to each user's signal, so that users' QoS requirements are satisfied.
+A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users. 
+Numerical results are presented. 
 
 ----------------
-### Requirement:
+### Documentation
+
+To generate source code documentation, into file `pa-uav-noma`run: 
+`pdoc3 --html --
+
+or can be viewed in [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html)
+
+----------------
+### Requirement
 
 
 The implementation requires Python 3.9+ to run.
@@ -65,10 +48,43 @@ The following libraries are required:
 	power allocation, decoding order and others.
 	
 	Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
- 
 
 -------------------------
-### Algorithm description:
+### Scenario Description
+
+
+We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
+![System model.](pa-uav-noma/figures/UAV_system_model.png)
+
+In this scenario, a UAV is deployed as an air base station that communicates with two-user $$N_1$$ and $$N_2$$.  We consider that each node is equipped with a single antenna and both UAV and users operate in the half-duplex mode.
+The system is inspired on cognitive radio (CR) concept to decode the user's messages.
+Based on this, the user $$N_1$$ is viewed as the primary user and $$N_2$$ is viewed as secondary user.
+In order to guarantee primary user's Quality-of-Service requirements, the UAV first decodes the $$N_1$$'s message.
+Then, the UAV decodes the message from the secondary user $$N_2$$ without experiencing any performance degradation due to the primary user.
+
+*Example:*
+
+	`$$N_1$$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
+
+	`$$N_2$$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
+
+Different levels of power coefficients must be allocated to each user's signal, so that users' QoS requirements are satisfied.
+
+
+ 
+-------------------------------
+## Performance analysis metrics
+The outage probability and achievable rate are used as performance metrics. 
+
+- `Outage Probability:` the outage probability is estimated as the ratio between the number of outage events and 
+   the total number of Monte Carlo repetitions. An outage event happens when the supported user data rates for a particular 
+   instantaneous channel realization is less than the target data rate. 
+   
+- `Achievable Rate:` the achievable rate consists of the throughput of network users, while max-min achievable rate 
+   consists of the average throughput of all network users.
+   
+-------------------------
+### Algorithm description
 
 
 Adaptive power allocation algorithm was not implemented in the present version.
