@@ -41,14 +41,14 @@ Numerical results are presented.
 ### Documentation
 
 To generate source code documentation, in the folder `pa-uav-noma`run: 
-
-		pdoc3 --html --output-dir docs pa-uav-noma.py
+	
+	 pdoc3 --html --output-dir docs pa-uav-noma.py
 		
 To access the documentation via http://localhost:8080, run:
-		
-        pdoc3 --http : pa-uav-noma.py
 
-On the other hand, the documentation can be viewed at [Documentation.](https://limabrena.github.io/docs/pa-uav-noma.html).
+	 pdoc3 --http : pa-uav-noma.py
+	 
+On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html).
  
 ----------------
 ### Requirement
@@ -67,19 +67,22 @@ The following libraries are required:
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
-![System model.](pa-uav-noma/figures/UAV_system_model.png)
+![System model.](pa-uav-noma/figures/UAV_system_model.eps)
 
-In this scenario, a UAV is deployed as an air base station that communicates with two-user $$N_1$$ and $$N_2$$.  We consider that each node is equipped with a single antenna and both UAV and users operate in the half-duplex mode.
+In this scenario, a UAV is deployed as an air base station that communicates with two-user $N_1$ and $N_2$.  
+For each Monte Carlo sample, users are randomly distributed in a 2D region (x-axis and y-axis). 
+While the UAV has a flight path randomly defined at points in a circle, in a 3D region (x-axis, y-axis and z-axis).
+We consider that each node is equipped with a single antenna and both UAV and users operate in the half-duplex mode.
 The system is inspired on cognitive radio (CR) concept to decode the user's messages.
-Based on this, the user $$N_1$$ is viewed as the primary user and $$N_2$$ is viewed as secondary user.
-In order to guarantee primary user's Quality-of-Service requirements, the UAV first decodes the $$N_1$$'s message.
-Then, the UAV decodes the message from the secondary user $$N_2$$ without experiencing any performance degradation due to the primary user.
+Based on this, the user $N_1$ is viewed as the primary user and $N_2$ is viewed as secondary user.
+In order to guarantee primary user's Quality-of-Service requirements, the UAV first decodes the $N_1$'s message.
+Then, the UAV decodes the message from the secondary user $N_2$ without experiencing any performance degradation due to the primary user.
 
 *Example:*
 
-	`$$N_1$$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
+	`$N_1$ may be an Internet of Things (IoT) healthcare device which needs to send health status changes.` 
 
-	`$$N_2$$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
+	`$N_2$ an IoT device sending personal tasks records, where the transmission is a delay tolerant.`
 
 Different levels of power coefficients must be allocated to each user's signal, so that users' QoS requirements are satisfied.
 
