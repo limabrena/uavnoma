@@ -22,7 +22,9 @@ Numerical results are presented.
 		  
 	  
 - Usage: 
-
+    
+	Run the file `pa-uav-noma.py` in your preferred IDE.
+	
 	This application can be used as a study tool to understand the 
 	behavior of the achievable rate by two users and the influence
 	of the allocation of power coefficients in a UAV-NOMA system. 
