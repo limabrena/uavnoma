@@ -32,9 +32,11 @@ Numerical results are presented.
 	 
 - Usage: 
     
-	Via terminal, access the project folder `power-allocation-UAV-NOMA-two-users\pauavnoma` and run the file `pauavnoma.py`.
+	Via terminal, access the project folder `power-allocation-UAV-NOMA-two-users\pauavnoma` and run:
 	
 		$ python pauavnoma.py
+		
+	or access the project folder from an IDE.
 	
 	This application can be used as a study tool to understand the 
 	behavior of the achievable rate by two users and the influence
