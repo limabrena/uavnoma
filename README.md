@@ -23,7 +23,7 @@ Numerical results are presented.
 		  
 - Installation:
 	
-	To install this implementation locally, open the project folder in your terminal and run:
+	To install this implementation locally, open the project folder `power-allocation-UAV-NOMA-two-users` in your terminal and run:
 
 		$ pip install . --user
 		
@@ -32,7 +32,9 @@ Numerical results are presented.
 	 
 - Usage: 
     
-	Run the file `pauavnoma.py`.
+	Via terminal, access the project folder `power-allocation-UAV-NOMA-two-users\pauavnoma` and run the file `pauavnoma.py`.
+	
+		$ python pauavnoma.py
 	
 	This application can be used as a study tool to understand the 
 	behavior of the achievable rate by two users and the influence
