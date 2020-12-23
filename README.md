@@ -1,5 +1,6 @@
 ## Power Allocation in UAV-NOMA System with Two-users
-[![Code Coverage](https://img.shields.io/codecov/c/gh/pdoc3/pdoc.svg?style=for-the-badge)]()
+
+
 
 A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users. 
 Numerical results are presented. 
@@ -20,7 +21,7 @@ Numerical results are presented.
 	    https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
 		
 		  
-- Installing:
+- Installation:
 	
 	To install this implementation locally, open the project folder in your terminal and run:
 
@@ -54,7 +55,11 @@ To generate source code documentation, in the folder `pauavnoma` run:
 	 pdoc --html --output-dir docs pauavnoma.py
 		
 	 
-On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pauavnoma.html).
+On the other hand, the documentation can be viewed at:
+
+[Documentation](https://limabrena.github.io/pauavnoma/docs/pauavnoma.html)
+
+[Code Coverage](https://limabrena.github.io/pauavnoma/htmlcov/index.html)
  
 ----------------
 ### Requirement
