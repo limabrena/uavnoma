@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" 
+''' 
    Numerical Simulation of Power allocation in UAV-NOMA System.
    
    A Python 3.9 implementation of a model of wireless communication 
@@ -10,10 +10,10 @@
 
    .. include:: ./documentation.md
 
-"""
+'''
 
 import random
-import numpy as np 
+import numpy as np
 from numpy import sqrt
 import matplotlib.pyplot as plt
 import math
@@ -21,34 +21,70 @@ import math
 
 
 # --------------- Paramenters ---------------
-N_mc = 10**4  # Monte Carlo samples
-N_users = 2       # Number of Users
-M_uav = 1        # Number of UAVs
-snr_dB = np.array(range(10, 51, 2))     
-snr_linear = 10**(snr_dB/10) # SNR linear
-path_loss_exp = 2
+def parameters():
+   '''Returns the simulation parameters.
+
+      Enter values for each requested parameter. The entered 
+      values are tested to check if the parameters are viable.
+   '''
+   samples_mc = 10000 # Monte Carlo samples
+   print("The greater the number of samples, the more computational time is required.")
+   assert 10000<=samples_mc <= 1000000, "Invalid quantity, the value entered must be 10000<=samples_mc <= 1000000."
+
+   number_users =2
+   assert number_users == 2, "Number of users must be 2."  
+
+   power_los = 1.0
+   assert power_los == 1.0 or power_los == 2.0,  "Invalid power of Line-of-Sigth path & scattered paths."
+ 
+   rician_factor = 6 
+   assert rician_factor>=0 and rician_factor <=10, "Invalid Rician factor, the value must be (0<= value <= 10)"
+   
+
+   path_loss_value = 2 # Path loss exponent
+   number_uav = 1      # Number of UAVs
+   assert number_uav == 1, "Number of UAV must be 1." 
+
+   radius_value_uav = 1.0 # Fly trajectory of the UAV in meters
+   radius_value_user= 2.0 # Distribution radius of users in the cell in meters.
+   # Users' Target Rate
+   rate_value_primary_user = 1.0  # Target rate bits/s/Hertz  primary user
+   rate_value_secondary_user = 0.5  # Target rate bits/s/Hertz  secondary users
+   snr_values_dB = np.array(range(10, 51, 2))  # SNR in dB
+   snr_values_linear = 10**(snr_values_dB/10)  # SNR linear
+
+   return samples_mc, number_users, power_los, rician_factor, path_loss_value, number_uav, snr_values_dB, snr_values_linear, radius_value_uav, radius_value_user, rate_value_primary_user, rate_value_secondary_user
 
 
-# Rician Fading
-P_los =1.0 # Total power of LOS path & scattered paths
-K = 8 # Rician Factor (if K=0, Rayleigh fading)
+def generate_power_Coeff(n_users):
+   '''Returns the power coefficient allocation of the users.
+     Arguments:
+
+         n_user -- number of users. 
+    Return:   
+
+         data_power_Pri --  power coefficients of the Primary users.
+         data_power_Sec --  power coefficients of the Secondary users.
+   '''
+
+   print('WARNING: The sum of powers must be: [0 <sum(power) <= 1], \n AND the power of the primary user must be greater than that of the secondary in order for their QoS to be satisfied. E.g. user_1 = 0.8 and user_2 =0.2.\n')
+   #('Enter the value of power coefficient allocation of the Primary User:  ')
+   data_power_Pri = 0.8 #float(input('--> '))
+  # ('Enter the value of power coefficient allocation of the Secondart User:  ')
+   data_power_Sec = 0.2 #float(input('--> '))
+      
+   return data_power_Pri, data_power_Sec
+
+
+N_mc, N_users, P_los, K, path_loss_exp, M_uav, snr_dB, snr_linear, radius_uav,  radius_user, target_rate_primary_user, target_rate_secondary_user = parameters()
+powerCoeffPrimary, powerCoeffSecondary = generate_power_Coeff(N_users) 
+
+# Fading modeled by Rician distribution
 s=np.sqrt(K/(K+1)*P_los) # Non-Centrality Parameter (mean)
 sigma=P_los/np.sqrt(2*(K+1)) # Standard deviation
 
-# Users' Target Rate
-target_rate_primary_user = 1.0  # Target rate bits/s/Hertz  primary user
-target_rate_secondary_user = 0.5  # Target rate bits/s/Hertz  secondary users
-
-
-powerCoeff = [0.8, 0.2] # Fixed power factor allocation NOMA for primary user and secondary user, respectively
-
-
-radius_uav = 1.0 # Fly trajectory of the UAV in meters
-radius_user= 2.0 # Distribution radius of users in the cell in meters.
 
 # Initialization of some arrays
-rate_us = np.zeros((N_mc,len(snr_dB)))
-rate_uw = np.zeros((N_mc,len(snr_dB)))
 out_probability= np.zeros((N_mc,len(snr_dB),N_users))
 out_probability_system = np.zeros((N_mc,len(snr_dB)))
 out_probability_secondary_user = np.zeros((N_mc,len(snr_dB)))
@@ -64,7 +100,7 @@ for mc in range(N_mc):
    def random_Position_UAV(numberUAV, radiusUAV):
       ''' Returns a random UAV position based on 3D Cartesian coordinates.
 
-                x_r: axis x | y_r: axis y | z_r: heigth
+                x_r: x-axis | y_r: y-axis | z_r: heigth
 
        `theta_r:` randomly generates an angle  
 
@@ -73,13 +109,13 @@ for mc in range(N_mc):
 
        `rho_u:` radius in meter of the area where users are distributed
 
-        Args:
+        Arguments:
 
             umberUAV -- number of UAV.
             radiusUAV -- fly trajectory of the UAV in meters. 
        Return:   
 
-            x_r, y_r, z_r -- position in the axis x, axis y and heigth of the UAV.
+            x_r, y_r, z_r -- position in the x-axis, y-axis and heigth of the UAV.
      '''
       theta_r = (np.random.rand(numberUAV,1)*(math.pi*2))
       rho_r = radiusUAV
@@ -91,23 +127,23 @@ for mc in range(N_mc):
    def random_Position_Users(numberUsers, radiusUser):
       ''' Returns a random ground users position based on 2D Cartesian coordinates. 
 
-               x_u: axis x |  y_u: axis y | height is not considered
+               x_u: x-axis |  y_u: y-axis | height is not considered
 
        `theta_u:` randomly generates an angle  
 
        `rho_u:` radius in meter of the area where users are distributed
 
-        Args:
+        Arguments:
 
             numberUsers -- number of users.
             radiusUser -- distribution radius of users in the cell in meters.
        Return:   
 
-            x_u, y_u -- position in the axis x and axis y of the n-th user.  
+            x_u, y_u -- position in the x-axis and y-axis of the n-th user.  
 
       '''
       theta_u = (np.random.rand(numberUsers,1))*(math.pi*2)
-      rho_u = (sqrt(np.random.rand(numberUsers,1))*radiusUser)
+      rho_u = (np.sqrt(np.random.rand(numberUsers,1))*radiusUser)
       x_u = (rho_u*np.cos(theta_u))
       y_u = (rho_u*np.sin(theta_u))
       return x_u, y_u  
@@ -136,7 +172,7 @@ for mc in range(N_mc):
 
                      Secondary user:  channelGain[1] -> min value    
 
-        Args:
+        Arguments:
 
             s -- non-Centrality Parameter (mean).
             sigma -- standard deviation.
@@ -174,8 +210,9 @@ for mc in range(N_mc):
    sinr_secondary = np.zeros((len(snr_dB))) 
    inst_rate_primary = np.zeros((len(snr_dB))) 
    inst_rate_secondary = np.zeros((len(snr_dB))) 
-   def calculate_Instantaneous_Rate(channelPri,channelSec,snrValues,power,target_RatePri):
-      '''Returns the instantaneous achievable rate of the primary user and secondary user for all values of SNR in dB.
+
+   def calculate_Instantaneous_Rate_Primary(channelPri,channelSec,snrValuesdB,powerPrimary,powerSecondary,target_RatePri):
+      '''Returns the instantaneous achievable rate of the primary user for all values of SNR in dB.
 
          `sinr_primary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the primary user based on NOMA.
 
@@ -183,39 +220,55 @@ for mc in range(N_mc):
 
                If the calculated instantaneous rate does not reach the rate desired by the user, OMA is used in order to guarantee 
                the Quality-of-Service requirements. 
+ 
+        Arguments:
+
+            channelPri -- channel gain of the primary user
+            channelSec -- channel gain of the secondary user.
+            snrValuesdB -- SNR values in dB.
+            powerPrimary --  power coefficient allocated to the Primary user.
+            powerSecondary --  power coefficient allocated to the Secondary user.
+            target_RatePri -- target rate of the primary user.
+       Return:   
+            
+            inst_rate_primary -- instantaneous achievable rate of the primary user.
+      '''
+      for sn in range(0,len(snrValuesdB)):    
+
+         sinr_primary[sn] = (snr_linear[sn]*channelPri*powerPrimary) / (snr_linear[sn]*channelSec*powerSecondary  + 1)
+         inst_rate_primary[sn] = np.log(1+sinr_primary[sn]) # Instantaneous achievable rate of primary user NOMA
+
+         if inst_rate_primary[sn] < target_RatePri: 
+            sinr_primary[sn] = (snr_linear[sn]*channelPri)
+            inst_rate_primary[sn] = 0.5*np.log(1+sinr_primary[sn]) # Instantaneous achievable rate of primary user OMA
+      return inst_rate_primary
+
+   def calculate_Instantaneous_Rate_Secondary(channelSec,snrValues,powerSecondary):
+      '''Returns the instantaneous achievable rate of the secondary user for all values of SNR in dB.
 
          `sinr_secondary:` generates the Signal-to-interference-plus-noise ratio (SINR) experienced by the secondary user based on NOMA.
 
          `inst_rate_secondary:` calculates instantaneous rate of the secondary user based on sinr_secondary.
  
  
-        Args:
+        Arguments:
 
-            channelPri -- channel gain of the primary user
             channelSec -- channel gain of the secondary user.
             snrValues -- SNR values in dB.
-            power --  power coefficient allocation.
-            target_RatePri -- target rate of the primary user.
+            powerSecondary --  power coefficient allocated to the Secondary user.
        Return:   
             
-            inst_rate_primary -- instantaneous achievable rate of the primary user.
             inst_rate_secondary -- instantaneous achievable rate of the secondary user.   
       '''
+
       for sn in range(0,len(snrValues)):    
-
-         sinr_primary[sn] = (snr_linear[sn]*channelPri*power[0]) / (snr_linear[sn]*channelSec*power[1]  + 1)
-         inst_rate_primary[sn] = np.log(1+sinr_primary[sn]) # Instantaneous achievable rate of primary user NOMA
-
-         if inst_rate_primary[sn] < target_RatePri: 
-            sinr_primary[sn] = (snr_linear[sn]*channelPri)
-            inst_rate_primary[sn] = 0.5*np.log(1+sinr_primary[sn]) # Instantaneous achievable rate of primary user OMA
-
-         sinr_secondary[sn] = (snr_linear[sn]*channelSec*power[1])
+         sinr_secondary[sn] = (snr_linear[sn]*channelSec*powerSecondary)
          inst_rate_secondary[sn] = np.log(1+sinr_secondary[sn]) # Instantaneous achievable rate of secondary user
 
-      return inst_rate_primary, inst_rate_secondary
+      return inst_rate_secondary
 
-   instantaneous_rate_primary[mc,:], instantaneous_rate_secondary[mc,:] = calculate_Instantaneous_Rate(channelGainPrimary, channelGainSecondary, snr_dB, powerCoeff, target_rate_primary_user)
+   instantaneous_rate_primary[mc,:] = calculate_Instantaneous_Rate_Primary(channelGainPrimary, channelGainSecondary, snr_dB, powerCoeffPrimary, powerCoeffSecondary, target_rate_primary_user)
+   instantaneous_rate_secondary[mc,:] = calculate_Instantaneous_Rate_Secondary(channelGainSecondary, snr_dB, powerCoeffSecondary)
   
     
    for sn in range(0,len(snr_dB)):  
@@ -241,31 +294,45 @@ for mc in range(N_mc):
       average_rate[mc,sn] = (instantaneous_rate_primary[mc,sn]+instantaneous_rate_secondary[mc,sn])/2 # Average achievable rate in bits/s/Hz
 
 #------- FIGURES --------
-''' # To plot the figures, this comment must be removed.
+
 
 # Outage Probability 
 
 out_prob_mean = np.mean(out_probability_system, axis=0) # Outage probability of the System
 out_prob_primary = np.mean(out_probability_primary_user, axis=0) # Outage probability of the Primary User
 out_prob_secondary = np.mean(out_probability_secondary_user, axis=0) # Outage probability of the Secondary User
+print('Outage probability system:', out_prob_mean)
+
+#Saving outage probability values in .txt
+#print('Outage probability system:', out_prob_mean, '\n\nOutage probability primary user:', out_prob_primary, '\n\nOutage probability secondary user:', out_prob_secondary, file=open("pa-uav-noma/outage_prob_values.txt", "w"))
 
 
-plt.semilogy(snr_dB, out_prob_mean, 'go-', label="Fixed Power Allocation", linewidth=2)
-plt.semilogy(snr_dB, out_prob_primary, 'b.-', label="primary user", linewidth=1)
-plt.semilogy(snr_dB, out_prob_secondary, 'r.-', label="secondary user", linewidth=1)
+# Achievable Rate 
+average_rate_mean = np.mean(average_rate, axis=0) # Average achievable rate of the system
+rate_mean_primary_user = np.mean(instantaneous_rate_primary, axis=0) # Average achievable rate of the Primary User
+rate_mean_secondary_user = np.mean(instantaneous_rate_secondary, axis=0) # Average achievable rate of the Secondary User
+print('Average Achievable Rate of the System:', average_rate_mean)
 
+
+# Saving achievable rate values in .txt
+#print(' Average Achievable Rate of the System:', average_rate_mean, '\n\nAverage achievable rate of the Primary User:', rate_mean_primary_user, '\n\nAverage achievable rate of the Secondary User:', rate_mean_secondary_user, file=open("pa-uav-noma/achievable_rate_values.txt", "w"))
+
+# To plot the figures, the comments below need to be removed.
+'''
+
+plt.semilogy(snr_dB, out_prob_mean, 'go-', label="System", linewidth=2)
+plt.semilogy(snr_dB, out_prob_primary, 'b.-', label="Primary user", linewidth=1)
+plt.semilogy(snr_dB, out_prob_secondary, 'r.-', label="Secondary user", linewidth=1)
 plt.xlabel('SNR (dB)')
 plt.ylabel('Outage Probability')
 plt.legend(loc="lower left")
 plt.xlim(10,50)
 
 
-#Saving outage probability values in .txt
-#print('Outage probability system:', out_prob_mean, '\n\nOutage probability primary user:', out_prob_primary, '\n\nOutage probability secondary user:', out_prob_secondary, file=open("pa-uav-noma/outage_prob_values.txt", "w"))
 
 
 # Average Achievable Rate 
-average_rate_mean = np.mean(average_rate, axis=0) # Average achievable rate of the system
+
 plt.figure()
 plt.plot(snr_dB, average_rate_mean, 'r.-', label="Fixed PA", linewidth=2)
 plt.xlim(10,50)
@@ -273,8 +340,7 @@ plt.xlabel('SNR (dB)')
 plt.ylabel('Average achievable rate (bits/s/Hz)')
 plt.legend(loc="upper left")
 
-rate_mean_primary_user = np.mean(instantaneous_rate_primary, axis=0) # Average achievable rate of the Primary User
-rate_mean_secondary_user = np.mean(instantaneous_rate_secondary, axis=0) # Average achievable rate of the Secondary User
+
 plt.figure()
 plt.plot(snr_dB, rate_mean_primary_user, 'b.-', label="primary user", linewidth=1)
 plt.plot(snr_dB, rate_mean_secondary_user, 'r.-', label="secondary user", linewidth=1)
@@ -283,9 +349,7 @@ plt.xlabel('SNR (dB)')
 plt.ylabel('Achievable rate (bits/s/Hz)')
 plt.legend(loc="upper left")
 
-# Saving achievable rate values in .txt
-#print(' Average Achievable Rate of the System:', average_rate_mean, '\n\nAverage achievable rate of the Primary User:', rate_mean_primary_user, '\n\nAverage achievable rate of the Secondary User:', rate_mean_secondary_user, file=open("pa-uav-noma/achievable_rate_values.txt", "w"))
-
 
 plt.show()
+
 '''

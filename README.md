@@ -1,9 +1,8 @@
 ## Power Allocation in UAV-NOMA System with Two-users
+[![Code Coverage](https://img.shields.io/codecov/c/gh/pdoc3/pdoc.svg?style=for-the-badge)]()
 
 A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users. 
 Numerical results are presented. 
-
-
 
 ---------------------------------
 ### How can use this application? 
@@ -11,19 +10,28 @@ Numerical results are presented.
 
 - Download:
 
-     Cloning the repository via terminal:
+    Cloning the repository via terminal:
 	 
-		 $ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
+		$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
 
 		
-     Download ZIP file directly in my git repository:
+    Download ZIP file directly in my git repository:
 	 
-	      https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
+	    https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
+		
 		  
-	  
+- Installing:
+	
+	To install this implementation locally, open the project folder in your terminal and run:
+
+		$ pip install . --user
+		
+	If you modify the `pauavnoma.py` module, the package must be reinstalled.
+	
+	 
 - Usage: 
     
-	Run the file `pa-uav-noma.py` in your preferred IDE.
+	Run the file `pauavnoma.py`.
 	
 	This application can be used as a study tool to understand the 
 	behavior of the achievable rate by two users and the influence
@@ -37,26 +45,22 @@ Numerical results are presented.
 	Based on this, new methods can be proposed to solve trajectory problems, 
 	power allocation, decoding order and others.
 	
-	Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
 	
 ----------------
 ### Documentation
 
-To generate source code documentation, in the folder `pa-uav-noma`run: 
+To generate source code documentation, in the folder `pauavnoma` run: 
 	
-	 pdoc --html --output-dir docs pa-uav-noma.py
+	 pdoc --html --output-dir docs pauavnoma.py
 		
-To access the documentation via http://localhost:8080, run:
-
-	 pdoc --http : pa-uav-noma.py
 	 
-On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pa-uav-noma.html).
+On the other hand, the documentation can be viewed at [Documentation](https://limabrena.github.io/docs/pauavnoma.html).
  
 ----------------
 ### Requirement
 
 
-The implementation requires Python 3.9+ to run.
+The implementation requires Python 3.6+ to run.
 The following libraries are required:
 
  - `numpy` 
@@ -69,7 +73,7 @@ The following libraries are required:
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
-![System model.](pa-uav-noma/figures/UAV_system_model.png)
+![System model.](pauavnoma/figures/UAV_system_model.png)
 
 In this scenario, a UAV is deployed as an air base station that communicates with two-user $N_1$ and $N_2$.  
 For each Monte Carlo sample, users are randomly distributed in a 2D region (x-axis and y-axis). 
