@@ -80,6 +80,7 @@ The following libraries are required:
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
+
 ![System model.](pauavnoma/figures/UAV_system_model.png)
 
 In this scenario, a UAV is deployed as an air base station that communicates with two-user $N_1$ and $N_2$.  
