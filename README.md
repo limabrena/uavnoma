@@ -23,7 +23,7 @@ Numerical results are presented.
 		  
 - Installation:
 	
-	To install this implementation locally, open the project folder in your terminal and run:
+	To install this implementation locally, open the project folder `power-allocation-UAV-NOMA-two-users` in your terminal and run:
 
 		$ pip install . --user
 		
@@ -32,7 +32,11 @@ Numerical results are presented.
 	 
 - Usage: 
     
-	Run the file `pauavnoma.py`.
+	Via terminal, access the project folder `power-allocation-UAV-NOMA-two-users\pauavnoma` and run:
+	
+		$ python pauavnoma.py
+		
+	or access the project folder from an IDE.
 	
 	This application can be used as a study tool to understand the 
 	behavior of the achievable rate by two users and the influence
@@ -78,6 +82,7 @@ The following libraries are required:
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
+
 ![System model.](pauavnoma/figures/UAV_system_model.png)
 
 In this scenario, a UAV is deployed as an air base station that communicates with two-user $N_1$ and $N_2$.  
