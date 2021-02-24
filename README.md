@@ -9,6 +9,8 @@ Students can study the modeling of a UAV-NOMA network and use it as a basis for 
 The user can modify parameters and analyze the system's behavior. Based on this, new methods can be proposed to solve UAV trajectory problems, power allocation, user pairing, energy harvesting for UAV maintenance, decoding order and others.
 
 The package contains functions for calculating the position of the UAV and users, for calculating of the Signal Interference Noise Ratio (SINR) and for performance metrics, such as instantaneous achievable rate and outage probability.
+
+
 ---------------------------------
 ### Requirement
 
