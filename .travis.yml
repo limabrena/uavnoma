@@ -8,7 +8,6 @@ install:
 - pip install pip
 - pip install numpy
 - pip install matplotlib
-- pip install . --user pauavnoma
 - pip install codecov
 
 # command to run tests 
