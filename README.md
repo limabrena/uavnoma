@@ -1,5 +1,5 @@
 ## Power Allocation in UAV-NOMA System with Two-users
-
+[![Build Status](https://travis-ci.org/limabrena/power-allocation-UAV-NOMA-two-users.svg?branch=main)](https://travis-ci.org/github/limabrena/power-allocation-UAV-NOMA-two-users) 
 
 
 A Python 3.9 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users.

@@ -8,8 +8,14 @@ install:
 - pip install pip
 - pip install numpy
 - pip install matplotlib
-- pip install . pauavnoma
+- pip install . --user pauavnoma
+- pip install codecov
 
 # command to run tests 
 script:
 - python tests/test_pauavnoma.py pytest
+- coverage run -m --source=pauavnoma pytest
+
+# Push the results back to codecov
+after_success:
+  - codecov
