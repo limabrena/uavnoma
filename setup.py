@@ -14,6 +14,6 @@ setuptools.setup(
     url = "https://github.com/limabrena/power-allocation-UAV-NOMA-two-users",
     packages = ['pauavnoma'],
     install_requires = ['numpy', 'python-math', 'matplotlib', 'random2'],
-    python_requires = '>=3.6',
+    python_requires = '>=3.7',
 
 ) 

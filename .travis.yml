@@ -6,9 +6,8 @@ python:
 
 # command to install dependencies 
 install:
-- pip install numpy
-- pip install matplotlib
+- python setup.py -q install
 
 # command to run tests 
 script:
-- pytest
+- python tests/test_pauavnoma.py pytest
