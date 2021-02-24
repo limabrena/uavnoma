@@ -1,10 +1,8 @@
 import numpy as np
 import math
 
-# from pauavnoma.generate_values import random_position_uav,random_position_users,generate_channel,calculate_instantaneous_rate_primary,calculate_instantaneous_rate_secondary
-# from pauavnoma.parameters import  init_parameters, generate_power_coeff
 from pauavnoma.uavnoma import valuesGen, mainStructure
-#from main import main_values
+
 
 N_users = 2
 P_los = 1.0  # 1.0 or 2.0

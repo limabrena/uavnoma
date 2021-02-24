@@ -1,4 +1,4 @@
-## Power Allocation in UAV-NOMA System with Two-users
+## System Model of UAV-NOMA System with Two-users
 [![Build Status](https://travis-ci.org/limabrena/power-allocation-UAV-NOMA-two-users.svg?branch=main)](https://travis-ci.org/github/limabrena/power-allocation-UAV-NOMA-two-users)
 [![codecov](https://codecov.io/gh/limabrena/power-allocation-UAV-NOMA-two-users/branch/main/graph/badge.svg?token=H5W453JPYU)](https://codecov.io/gh/limabrena/power-allocation-UAV-NOMA-two-users) 
 
