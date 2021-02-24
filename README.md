@@ -2,7 +2,7 @@
 
 
 
-A Python 3.9 implementation of the Power Allocation Algorithm for Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users.
+A Python 3.9 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users.
 
 Students can study the modeling of a UAV-NOMA network and use it as a basis for implementing other technologies. This application can be used as a study tool to understand the  behavior of the achievable rate by two users and the influence of the allocation of power coefficients in a UAV-NOMA system. The communication model presented is a base of UAV-NOMA principles and can be expanded to several other scenarios, such as cooperative systems, full-duplex communication,  and others in order to improve system performance.
 		
