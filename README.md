@@ -2,10 +2,25 @@
 
 
 
-A Python 3.9 implementation of the Power Allocation Algorithm for UAV-NOMA System with 2 Users. 
-Numerical results are presented. 
+A Python 3.9 implementation of the Power Allocation Algorithm for Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users.
 
+Students can study the modeling of a UAV-NOMA network and use it as a basis for implementing other technologies. This application can be used as a study tool to understand the  behavior of the achievable rate by two users and the influence of the allocation of power coefficients in a UAV-NOMA system. The communication model presented is a base of UAV-NOMA principles and can be expanded to several other scenarios, such as cooperative systems, full-duplex communication,  and others in order to improve system performance.
+		
+The user can modify parameters and analyze the system's behavior. Based on this, new methods can be proposed to solve UAV trajectory problems, power allocation, user pairing, energy harvesting for UAV maintenance, decoding order and others.
+
+The package contains functions for calculating the position of the UAV and users, for calculating of the Signal Interference Noise Ratio (SINR) and for performance metrics, such as instantaneous achievable rate and outage probability.
 ---------------------------------
+### Requirement
+
+The implementation requires Python 3.6+ to run.
+The following libraries are required:
+
+ - `numpy` 
+ - `matplotlib.pyplot`
+ - `math`
+ - `random`
+
+-------------------------
 ### How can use this application? 
 
 
@@ -20,70 +35,49 @@ Numerical results are presented.
 	 
 	    https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
 		
-		  
+
+The user can simply run it from the downloaded folder, provided the necessary requirements are installed. This is the easiest way for the student to be able to study and modify the system model.
+
+Or the user can install the package as follows:
 - Installation:
 	
 	To install this implementation locally, open the project folder `power-allocation-UAV-NOMA-two-users` in your terminal and run:
 
 		$ pip install . --user
 		
-	If you modify the `pauavnoma.py` module, the package must be reinstalled.
+	If you modify the `uavnoma.py` in the module, the package must be reinstalled.
 	
 	 
 - Usage: 
     
-	Via terminal, access the project folder `power-allocation-UAV-NOMA-two-users\pauavnoma` and run:
+	To plot the figures via terminal, access the project folder `power-allocation-UAV-NOMA-two-users` and run:
 	
-		$ python pauavnoma.py
+		$ python plot_figures.py
 		
 	or access the project folder from an IDE.
-	
-	This application can be used as a study tool to understand the 
-	behavior of the achievable rate by two users and the influence
-	of the allocation of power coefficients in a UAV-NOMA system. 
-	The communication model presented is a base of UAV-NOMA principles and 
-	can be expanded to several other scenarios, such as massive MIMO, 
-	full-duplex communication, and others in order to 
-	improve the users' rate performance.
-		
-	The user can modify parameters and analyze the system's behavior. 
-	Based on this, new methods can be proposed to solve trajectory problems, 
-	power allocation, decoding order and others.
-	
 	
 ----------------
 ### Documentation
 
 To generate source code documentation, in the folder `pauavnoma` run: 
 	
-	 pdoc --html --output-dir docs pauavnoma.py
+	 pdoc --html --output-dir docs auavnoma.py
 		
 	 
 On the other hand, the documentation can be viewed at:
 
-[Documentation](https://limabrena.github.io/pauavnoma/docs/pauavnoma.html)
+[Documentation](https://limabrena.github.io/pauavnoma/docs/uavnoma.html)
 
 [Code Coverage](https://limabrena.github.io/pauavnoma/htmlcov/index.html)
  
 ----------------
-### Requirement
 
-
-The implementation requires Python 3.6+ to run.
-The following libraries are required:
-
- - `numpy` 
- - `matplotlib.pyplot`
- - `math`
- - `random`
-
--------------------------
 ### Scenario Description
 
 
 We consider a uplink UAV-aided NOMA network, as illustrated in figure below. 
 
-![System model.](pauavnoma/figures/UAV_system_model.png)
+![System model.](figures/UAV_system_model.png)
 
 In this scenario, a UAV is deployed as an air base station that communicates with two-user $N_1$ and $N_2$.  
 For each Monte Carlo sample, users are randomly distributed in a 2D region (x-axis and y-axis). 

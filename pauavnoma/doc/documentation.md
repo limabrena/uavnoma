@@ -15,7 +15,7 @@ Example: when the Rician Factor `K=0`, fading is similar to Rayleigh's.
 
 
 ----------------
-### Requirement
+## Requirement
 
 
 The implementation requires Python 3.6+ to run.
@@ -62,13 +62,9 @@ The following libraries are required:
 - `Achievable Rate:` the achievable rate consists of the throughput of network users, while average achievable rate 
    consists of the average throughput of all network users.
    
-To plot the figures, the comments at the beginning of the Figures section must be removed from the code.   
+To plot the figures, run:
+
+	$ python plot_figures.py
 
 --------------------------------
-## Adaptive Algorithm description
 
-
-Adaptive power allocation algorithm was not implemented in the present version.
-
-
---------------------------------
