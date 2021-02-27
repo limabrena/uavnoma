@@ -13,12 +13,14 @@ radius_uav = 1.0
 radius_user = 2.0
 target_rate_primary_user = 1
 target_rate_secondary_user = 0.5
+coeffHard = 0.01
+coeffSic = 0.01
 
 theta_r = np.random.rand(M_uav, 1) * (math.pi * 2)
 rho_r = radius_uav
 x_r = rho_r * np.cos(theta_r)
 y_r = rho_r * np.sin(theta_r)
-z_r = 30.0
+z_r = 20.0
 
 theta_u = (np.random.rand(N_users, 1)) * (math.pi * 2)
 rho_u = np.sqrt(np.random.rand(N_users, 1)) * radius_user
@@ -45,6 +47,8 @@ def test_parameter():
         radius_value_user,
         rate_value_primary_user,
         rate_value_secondary_user,
+        coeffHard,
+        coeffSic,
     ) = valuesGen.init_parameters()
     assert (
         10000 <= samples_mc <= 1000000
@@ -64,6 +68,8 @@ def test_parameter():
     assert radius_value_user >= 1
     assert rate_value_primary_user > 0
     assert rate_value_secondary_user > 0
+    assert coeffHard >= 0
+    assert coeffSic >= 0
 
 
 def test_position_user():
@@ -112,23 +118,26 @@ def test_rate_primary_user():
     rate_pri = valuesGen.calculate_instantaneous_rate_primary(
         channelGain_Primary,
         channelGain_Secondary,
-        snr_values_dB,
+        snr_values_linear,
         power_Primary,
         power_Secondary,
         target_rate_primary_user,
+        coeffHard,
+        coeffSic,
     )
     assert rate_pri.all() >= 0  # Non-negative
 
 
 def test_rate_secondary_user():
-    channelGain_Secondary = np.min(
+    channelGain_Secondary = np.max(
         valuesGen.generate_channel(
             s, sigma, N_users, x_u, y_u, x_r, y_r, path_loss_exp, z_r
         )
     )
     power_Secondary = np.min(valuesGen.generate_power_coeff(N_users))
+    power_Primary = 1 - power_Secondary
     rate_sec = valuesGen.calculate_instantaneous_rate_secondary(
-        channelGain_Secondary, snr_values_dB, power_Secondary
+        channelGain_Secondary, snr_values_linear, power_Secondary, power_Primary, coeffHard, coeffSic
     )
     assert rate_sec.all() > 0  # Non-negative
 

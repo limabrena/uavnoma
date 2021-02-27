@@ -3,9 +3,9 @@
 [![codecov](https://codecov.io/gh/limabrena/power-allocation-UAV-NOMA-two-users/branch/main/graph/badge.svg?token=H5W453JPYU)](https://codecov.io/gh/limabrena/power-allocation-UAV-NOMA-two-users) 
 
 
-A Python 3.9 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users.
+A Python 3.9 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users under considerations of non-ideal conditions, such as imperfect sucessive interference cancelation (SIC) and residual harware impairments (RHI).
 
-Students can study the modeling of a UAV-NOMA network and use it as a basis for implementing other technologies. This application can be used as a study tool to understand the  behavior of the achievable rate by two users and the influence of the allocation of power coefficients in a UAV-NOMA system. The communication model presented is a base of UAV-NOMA principles and can be expanded to several other scenarios, such as cooperative systems, full-duplex communication,  and others in order to improve system performance.
+Students can study the modeling of a UAV-NOMA network and use it as a basis for implementing other technologies. This application can be used as a study tool to understand the behavior of the achievable rate by two users and the influence of the allocation of power coefficients in a UAV-NOMA system. The communication model presented is a base of UAV-NOMA principles and can be expanded to several other scenarios, such as cooperative systems, full-duplex communication,  and others in order to improve system performance.
 		
 The user can modify parameters and analyze the system's behavior. Based on this, new methods can be proposed to solve UAV trajectory problems, power allocation, user pairing, energy harvesting for UAV maintenance, decoding order and others.
 
@@ -55,7 +55,7 @@ Or the user can install the package as follows:
     
 	To plot the figures via terminal, access the project folder `power-allocation-UAV-NOMA-two-users` and run:
 	
-		$ python plot_figures.py
+		$ python plotFigures.py
 		
 	or access the project folder from an IDE.
 	
@@ -64,14 +64,13 @@ Or the user can install the package as follows:
 
 To generate source code documentation, in the folder `pauavnoma` run: 
 	
-	 pdoc --html --output-dir docs auavnoma.py
+	 pdoc --html --output-dir docs uavnoma.py
 		
 	 
 On the other hand, the documentation can be viewed at:
 
 [Documentation](https://limabrena.github.io/pauavnoma/docs/uavnoma.html)
 
-[Code Coverage](https://limabrena.github.io/pauavnoma/htmlcov/index.html)
  
 ----------------
 

@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 
 # import generate_values as func
 # import parameters as init
-from pauavnoma.uavnoma import mainStructure as gen
+from uavnoma import mainStructure as gen
 
 (
     outage_probability_total,
@@ -56,31 +56,25 @@ rate_mean_secondary_user = np.mean(
     rate_secondary, axis=0
 )  # Average achievable rate of the Secondary User
 print("Average Achievable Rate of the System:", average_rate_mean)
+print("Achievable Rate of the Primary user:", rate_primary)
+print("Achievable Rate of the Secondary user:", rate_secondary)
 
 
 # Saving achievable rate values in .txt
-# print(' Average Achievable Rate of the System:', average_rate_mean, '\n\nAverage achievable rate of the Primary User:', rate_mean_primary_user, '\n\nAverage achievable rate of the Secondary User:', rate_mean_secondary_user, file=open("pauavnoma/doc/achievable_rate_values.txt", "w"))
+print(' Average Achievable Rate of the System:', average_rate_mean, '\n\nAverage achievable rate of the Primary User:', rate_mean_primary_user, '\n\nAverage achievable rate of the Secondary User:', rate_mean_secondary_user, file=open("pauavnoma/doc/achievable_rate_values.txt", "w"))
 
 # --------------------- FIGURES -----------------------------
 
 plot = "yes" 
 if plot == "yes":
     # Outage probability
-    plt.semilogy(snr_dB, out_prob_mean, "go-", label="System", linewidth=2)
+   # plt.semilogy(snr_dB, out_prob_mean, "go-", label="System", linewidth=2)
     plt.semilogy(snr_dB, out_prob_primary, "b.-", label="Primary user", linewidth=1)
     plt.semilogy(snr_dB, out_prob_secondary, "r.-", label="Secondary user", linewidth=1)
     plt.xlabel("SNR (dB)")
     plt.ylabel("Outage Probability")
     plt.legend(loc="lower left")
-    plt.xlim(10, 50)
-
-    # Average Achievable Rate of the System
-    plt.figure()
-    plt.plot(snr_dB, average_rate_mean, "r.-", label="Fixed PA", linewidth=2)
-    plt.xlim(10, 50)
-    plt.xlabel("SNR (dB)")
-    plt.ylabel("Average achievable rate (bits/s/Hz)")
-    plt.legend(loc="upper left")
+    plt.xlim(10, 40)
 
     # Average Achievable Rate of the users
     plt.figure()
@@ -88,7 +82,7 @@ if plot == "yes":
     plt.plot(
         snr_dB, rate_mean_secondary_user, "r.-", label="secondary user", linewidth=1
     )
-    plt.xlim(10, 50)
+    plt.xlim(10, 40)
     plt.xlabel("SNR (dB)")
     plt.ylabel("Achievable rate (bits/s/Hz)")
     plt.legend(loc="upper left")

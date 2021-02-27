@@ -51,7 +51,8 @@ The following libraries are required:
  - `sigma` (float) : Standard deviation of Rician distribution, obtained by `sigma = P_los/sqrt(2*(K+1))`.
  - `h_n` (array of float, size(N_users)) : channel coefficients over distance effects.
  - `channelGain` (array of float, size(N_users)) : channel gain `abs(h_n)^2` sorted in descending order (primary user > secondary user).
-
+ - `coeffHard`(float) : Residual Hardware Impairment coefficient.
+ - `coeffSic` (float) : Sucessice Interference Cancelation coefficient.
 -------------------------------
 ## Performance analysis metrics
 
@@ -64,7 +65,7 @@ The following libraries are required:
    
 To plot the figures, run:
 
-	$ python plot_figures.py
+	$ python plotFigures.py
 
 --------------------------------
 
