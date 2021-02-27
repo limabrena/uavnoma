@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 
 # import generate_values as func
 # import parameters as init
-from uavnoma import mainStructure as gen
+from pauavnoma.uavnoma import mainStructure as gen
 
 (
     outage_probability_total,
