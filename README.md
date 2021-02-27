@@ -115,5 +115,4 @@ The outage probability and achievable rate are used as performance metrics.
 ### Algorithm description
 
 
-Adaptive power allocation algorithm was not implemented in the present version.
 
