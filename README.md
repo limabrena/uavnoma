@@ -40,7 +40,7 @@ $ pip install uavnoma
 
 ### From GitHub
 ```
-$ 
+$ git clone https://github.com/limabrena/uavnoma.git
 ```
 ## Documentation 
 
