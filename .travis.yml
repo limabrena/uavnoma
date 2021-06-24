@@ -9,12 +9,12 @@ install:
 - pip install numpy
 - pip install matplotlib
 - pip install codecov
-- pip install . pauavnoma
+- pip install . uavnoma
 
 # command to run tests 
 script:
-- python tests/test_pauavnoma.py pytest
-- coverage run -m --source=pauavnoma pytest
+- python tests/test_uavnoma.py pytest
+- coverage run -m --source=uavnoma pytest
 
 # Push the results back to codecov
 after_success:
