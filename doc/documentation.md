@@ -1,11 +1,7 @@
 
 # Scenario Description
 
-We consider a uplink UAV-aided NOMA network, as illustrated in the figure below.
-
-![System model.](../figures/uav_system_model_ex.png)
-
-In this scenario, a UAV is deployed as an air base station that communicates with two users, $N_1$ and $N_2$.
+In our scenario, a UAV is deployed as an air base station that communicates with two users, $N_1$ and $N_2$.
 For each Monte Carlo sample, users are randomly distributed in a 2D region ($x$-axis and $y$-axis).
 While the UAV has a flight path randomly defined at points in a circle, in a 3D region ($x$-axis, $y$-axis and $z$-axis).
 We consider that each node is equipped with a single antenna and both UAV and users operate in the half-duplex mode.
