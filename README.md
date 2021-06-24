@@ -1,7 +1,7 @@
 # System Model of UAV-NOMA System with Two-users
 
-[![Build Status](https://travis-ci.org/limabrena/power-allocation-UAV-NOMA-two-users.svg?branch=main)](https://travis-ci.org/github/limabrena/power-allocation-UAV-NOMA-two-users)
-[![codecov](https://codecov.io/gh/limabrena/power-allocation-UAV-NOMA-two-users/branch/main/graph/badge.svg?token=H5W453JPYU)](https://codecov.io/gh/limabrena/power-allocation-UAV-NOMA-two-users)
+[![Build Status](https://travis-ci.org/limabrena/uavnoma.svg?branch=main)](https://travis-ci.org/github/limabrena/uavnoma)
+[![codecov](https://codecov.io/gh/limabrena/uavnoma/branch/main/graph/badge.svg?token=H5W453JPYU)](https://codecov.io/gh/limabrena/uavnoma)
 
 A Python 3.8 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users under considerations of non-ideal conditions, such as imperfect successive interference cancelation (SIC) and residual hardware impairments (RHI). We consider a uplink UAV-aided NOMA network, as illustrated in the figure below.
 
@@ -44,7 +44,7 @@ $
 ```
 ## Documentation 
 
-* [uavnoma documentation]()
+* [*uavnoma* package documentation](https://github.com/limabrena/limabrena.github.io/blob/main/uavnoma/docs/index.html)
 * [Developer's guide](doc/installationgruide.md)
 * [Tutorial for the uavnoma functions](example/uavnoma_tutorial.ipynb)
 * [Scenario Description](doc/documentation.md)

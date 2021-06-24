@@ -7,14 +7,14 @@
 Cloning the repository via terminal:
 
 ```
-$ git clone https://github.com/limabrena/power-allocation-UAV-NOMA-two-users.git
+$ git clone https://github.com/limabrena/uavnoma.git
 $ cd uavnoma
 ```
 
 Download ZIP file directly in my git repository:
 
 ```
-https://github.com/limabrena/power-allocation-UAV-NOMA-two-users/archive/main.zip
+https://github.com/limabrena/uavnoma/archive/main.zip
 ```
 
 The user can simply run it from the downloaded folder, provided the necessary requirements are installed. This is the easiest way for the student to be able to study and modify the system model.
@@ -22,7 +22,7 @@ The user can simply run it from the downloaded folder, provided the necessary re
 ### Usage
 
 An example on how to use a package can be seen in the examples folder.
-The folder contains a tutorial file `uavnoma_tutorial.ipynb`  and an example implementation of a UAV NOMA system using the *uavnoma* package.
+The folder contains a tutorial file [`uavnoma_tutorial.ipynb`](../example/uavnoma_tutorial.ipynb)  and an implementation example of an UAV NOMA system using the *uavnoma* package.
 Running the example file can be done with the following command from the project's root folder:
 ```
 $ python plot_figures.py
@@ -38,7 +38,7 @@ pdoc3 --html --output-dir docs uavnoma/
 ```
 This comand generates the HTML documentation and salve it in the docs folder.
 
-On the other hand, the documentation can be viewed [here](https://limabrena.github.io/pauavnoma/docs/uavnoma.html)
+On the other hand, the documentation can be viewed [here](https://limabrena.github.io/uavnoma/docs/index.html)
 
 ### Test
 
