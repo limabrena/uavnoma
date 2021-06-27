@@ -11,9 +11,9 @@ setuptools.setup(
     description = "UAV-NOMA System Model",
     long_description = long_description,
     long_description_content_type = 'text/markdown',
-    url = "https://github.com/limabrena/power-allocation-UAV-NOMA-two-users",
+    url = "https://github.com/limabrena/uavnoma",
     packages = ['uavnoma'],
-    install_requires = ['numpy', 'python-math', 'matplotlib'],
+    install_requires = ['numpy', 'matplotlib'],
     python_requires = '>=3.8',
 
-) 
+)
