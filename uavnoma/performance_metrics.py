@@ -1,6 +1,5 @@
-""" 
+"""
     This module contains script to calculate performance metrics: achievable rate and outage probability .
-   
 """
 
 import numpy as np
@@ -63,13 +62,13 @@ def calculate_instantaneous_rate_secondary(channelSec, snrValues, powerSecondary
 
         hardw_ip -- hardware impairments coefficient.
 
-        sic_ip -- imperfect SIC coefficient. 
+        sic_ip -- imperfect SIC coefficient.
 
     Return:
 
         inst_rate_secondary -- instantaneous achievable rate of the secondary user.
     """
-        
+
     sinr_secondary = ( snrValues * channelSec * powerSecondary ) / (
         snrValues * channelSec * ( powerPrimary*sic_ip + hardw_ip**2 ) + 1
     )
@@ -90,7 +89,7 @@ def average_rate(instantaneous_rate_primary,  instantaneous_rate_secondary):
 
     Return:
 
-        avr_rate -- averagre achievable rate in bits/s/Hz
+        avr_rate -- average achievable rate in bits/s/Hz
     """
     # Calculating of average achievable rate of the system
     avr_rate = (
@@ -101,9 +100,9 @@ def average_rate(instantaneous_rate_primary,  instantaneous_rate_secondary):
     return  avr_rate
 
 def outage_probability(
-    instantaneous_rate_primary, 
-    instantaneous_rate_secondary, 
-    target_rate_primary_user, 
+    instantaneous_rate_primary,
+    instantaneous_rate_secondary,
+    target_rate_primary_user,
     target_rate_secondary_user,
     ):
     """Returns the outage probability for the system, primary user, and secondary user
@@ -117,7 +116,7 @@ def outage_probability(
 
     Return:
 
-        avr_rate -- averagre achievable rate in bits/s/Hz
+        avr_rate -- average achievable rate in bits/s/Hz
     """
 
     if (instantaneous_rate_primary < target_rate_primary_user) or (

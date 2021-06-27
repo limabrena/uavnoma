@@ -1,14 +1,11 @@
-""" 
-    This module contains functions to generate simulation parameters.
-   
 """
+    This module contains functions to generate simulation parameters.
 
+"""
 
 import numpy as np
 from numpy import sqrt
 import math
-
-
 
 def __init__():
     pass
@@ -30,7 +27,7 @@ def random_position_uav(number_UAV, radius_UAV, uav_heigth):
 
         radius_UAV -- flight trajectory of the UAV in meters.
 
-        uav_heigth -- average flight height
+        uav_height -- average flight height
 
     Return:
 
@@ -74,10 +71,10 @@ def fading_rician(K, P_los):
 
     Arguments:
 
-        K -- rician factor.
-        
-        P_los -- power of Line-of-Sigth path & scattered paths.
-    
+        K -- Rician factor.
+
+        P_los -- power of line-of-sight path and scattered paths.
+
     Return:
         s, sigma -- mean and standard deviation to model fading from the Rician distribution.
     """
@@ -138,7 +135,7 @@ def generate_channel(
     # Initializing auxiliary arrays to store channel coefficients and distance between UAV and users, respectively:
     h_n = np.zeros(number_user)
     distance = np.zeros(number_user)
-    
+
     for uu in range(number_user):
 
         small_scale_fading = np.sqrt(
@@ -151,13 +148,13 @@ def generate_channel(
         )
         # Generate path loss atenuation
         large_scale_fading = sqrt((distance[uu])**(- path_loss))
-        
+
         # Generate channel coefficients
         h_n[uu] = (
             np.abs(small_scale_fading * large_scale_fading )
             ** 2
         )
-       
+
 
     #channelGain = sorted(h_n, reverse=True)
     channel_primary = np.min(h_n)
