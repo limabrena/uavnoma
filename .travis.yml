@@ -3,15 +3,14 @@ python:
 - "3.8"
 - "3.9"
 
-# command to install dependencies 
+# command to install dependencies
 install:
-- pip install pip
 - pip install numpy
 - pip install matplotlib
 - pip install codecov
 - pip install . uavnoma
 
-# command to run tests 
+# command to run tests
 script:
 - python tests/test_uavnoma.py pytest
 - coverage run -m --source=uavnoma pytest
