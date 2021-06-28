@@ -1,10 +1,9 @@
-"""      
-   A Python 3.8 implementation of a model of wireless communication 
-   system between an area base station and two users. 
+"""
+   A Python 3.8 implementation of a model of wireless communication
+   system between an area base station and two users.
    .. include:: ../README.md
    .. include:: ../doc/installationguide.md
    .. include:: ../doc/documentation.md
-
 """
 
 from .generate_values import fading_rician
