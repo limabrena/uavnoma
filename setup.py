@@ -15,5 +15,7 @@ setuptools.setup(
     packages = ['uavnoma'],
     install_requires = ['numpy', 'matplotlib'],
     python_requires = '>=3.8',
+    scripts=['bin/uavnoma-cli'],
+    include_package_data = True,
 
 )
