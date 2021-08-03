@@ -5,6 +5,8 @@
 
 import argparse
 import numpy as np
+import pandas as pd
+import tabulate as tab
 import matplotlib.pyplot as plt
 import uavnoma
 
@@ -51,15 +53,21 @@ parser.add_argument('-p1', '--power-coeff-primary', type=float, metavar='COEFF',
 parser.add_argument('-p2', '--power-coeff-secondary', type=float, metavar='COEFF',
                     help='The value of power coefficient allocation of the Secondary User',
                     default=0.2)
+parser.add_argument('-o', '--output', type=str, metavar='FILE',
+                    help='CSV file where to save simulation data',
+                    default=None)
 parser.add_argument('--plot', action='store_true',
                     help='Plot the values of the achievable rate and outage probability',
                     default=False)
+parser.add_argument('--no-print', action='store_true',
+                    help='Do not print results to terminal',
+                    default=False)
 
 # Unused arguments for now
-parser.add_argument('--number-uav', type=int, metavar='<value>',
+parser.add_argument('--number-uav', type=int, metavar='NUM',
                     help=argparse.SUPPRESS, # 'Number of UAV must be 1',
                     default=1)
-parser.add_argument('--number-user', type=int, metavar='<value>',
+parser.add_argument('--number-user', type=int, metavar='NUM',
                     help=argparse.SUPPRESS, # 'Number of users must be 2',
                     default=2)
 
@@ -165,19 +173,25 @@ rate_mean_secondary_user = np.mean(
 )  # Average achievable rate of the Secondary User
 
 
-print("Outage probability system:", out_prob_mean)
-print("Average Achievable Rate of the System:", average_rate_mean)
-print("Achievable Rate of the Primary user:", rate_primary_user)
-print("Achievable Rate of the Secondary user:", rate_secondary_user)
+# Put all mean data into a numpy matrix / table
+all_data_np = np.c_[ out_prob_mean, out_prob_primary, out_prob_secondary, average_rate_mean, rate_mean_primary_user, rate_mean_secondary_user]
 
+# Convert numpy matrix to Pandas dataframe with column names
+all_data_df = pd.DataFrame(all_data_np, columns = ['p_outage_sys', 'p_outage_usr1', 'p_outage_usr2',
+                                                   'avg_arate_sys', 'avg_arate_usr1', 'avg_arate_usr2' ])
 
-# Saving outage probability values in .txt
-print('Outage probability system:', out_prob_mean, '\n\nOutage probability primary user:', out_prob_primary, '\n\nOutage probability secondary user:', out_prob_secondary, file=open("./uavnoma/txt/outage_prob_values.txt", "w"))
+# Print to screen, except if --no-print option was specified
+if not args.no_print:
+    print(tab.tabulate(all_data_df, tablefmt='psql', showindex=False,
+                       headers=['Outage\nprobability\nSystem', 'Outage\nprobability\nPrimary user',
+                                'Outage\nprobability\nSecondary user', 'Average\nachievable rate\nSystem',
+                                'Average\nachievable rate\nPrimary User', 'Average\nachievable rate\nSecondary User']))
 
-# Saving achievable rate values in .txt
-print(' Average Achievable Rate of the System:', average_rate_mean, '\n\nAverage achievable rate of the Primary User:', rate_mean_primary_user, '\n\nAverage achievable rate of the Secondary User:', rate_mean_secondary_user, file=open("./uavnoma/txt/achievable_rate_values.txt", "w"))
+# Save results to file if a filename was specified
+if args.output != None:
+    all_data_df.to_csv(args.output, index=False)
 
-# --------------------- FIGURES -----------------------------
+# Plot simulation results if --plot option was given
 if args.plot:
     # Outage probability
    # plt.semilogy(snr_dB, out_prob_mean, "go-", label="System", linewidth=2)

@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type = 'text/markdown',
     url = "https://github.com/limabrena/uavnoma",
     packages = ['uavnoma'],
-    install_requires = ['numpy', 'matplotlib'],
+    install_requires = ['numpy', 'pandas', 'tabulate', 'matplotlib'],
     python_requires = '>=3.8',
     scripts=['bin/uavnoma-cli'],
     include_package_data = True,
