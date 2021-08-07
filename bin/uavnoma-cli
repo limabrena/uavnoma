@@ -174,18 +174,23 @@ rate_mean_secondary_user = np.mean(
 
 
 # Put all mean data into a numpy matrix / table
-all_data_np = np.c_[ out_prob_mean, out_prob_primary, out_prob_secondary, average_rate_mean, rate_mean_primary_user, rate_mean_secondary_user]
+all_data_np = np.c_[ snr_dB, out_prob_mean, out_prob_primary, out_prob_secondary, average_rate_mean, rate_mean_primary_user, rate_mean_secondary_user]
 
 # Convert numpy matrix to Pandas dataframe with column names
-all_data_df = pd.DataFrame(all_data_np, columns = ['p_outage_sys', 'p_outage_usr1', 'p_outage_usr2',
-                                                   'avg_arate_sys', 'avg_arate_usr1', 'avg_arate_usr2' ])
+all_data_df = pd.DataFrame(all_data_np,
+                           columns = ['snr_DB', 'p_outage_sys', 'p_outage_usr1',
+                                      'p_outage_usr2', 'avg_arate_sys',
+                                      'avg_arate_usr1', 'avg_arate_usr2' ])
 
 # Print to screen, except if --no-print option was specified
 if not args.no_print:
     print(tab.tabulate(all_data_df, tablefmt='psql', showindex=False,
-                       headers=['Outage\nprobability\nSystem', 'Outage\nprobability\nPrimary user',
-                                'Outage\nprobability\nSecondary user', 'Average\nachievable rate\nSystem',
-                                'Average\nachievable rate\nPrimary User', 'Average\nachievable rate\nSecondary User']))
+                       headers=['SNR\n(dB)', 'Outage\nprobability\nSystem',
+                                'Outage\nprobability\nPrimary user',
+                                'Outage\nprobability\nSecondary user',
+                                'Average\nachievable rate\nSystem',
+                                'Average\nachievable rate\nPrimary User',
+                                'Average\nachievable rate\nSecondary User']))
 
 # Save results to file if a filename was specified
 if args.output != None:
