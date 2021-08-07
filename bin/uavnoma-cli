@@ -75,7 +75,7 @@ parser.add_argument('--number-user', type=int, metavar='NUM',
 args = parser.parse_args()
 
 # Initialization of some auxiliary arrays
-snr_dB = np.array(range(10, 61, 2)) # SNR in dB
+snr_dB = np.linspace(10, 60, 26) # SNR in dB
 snr_linear = 10.0 ** (snr_dB / 10.0)  # SNR linear
 out_probability_system = np.zeros((args.monte_carlo_samples, len(snr_dB)))
 out_probability_secondary_user = np.zeros((args.monte_carlo_samples, len(snr_dB)))
