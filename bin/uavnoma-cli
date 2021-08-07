@@ -53,6 +53,15 @@ parser.add_argument('-p1', '--power-coeff-primary', type=float, metavar='COEFF',
 parser.add_argument('-p2', '--power-coeff-secondary', type=float, metavar='COEFF',
                     help='The value of power coefficient allocation of the Secondary User',
                     default=0.2)
+parser.add_argument('--snr-min', type=float, metavar='SNR_MIN',
+                    help='Minimum / starting SNR in dB',
+                    default=10)
+parser.add_argument('--snr-max', type=float, metavar='SNR_MAX',
+                    help='Maximum / finishing SNR in dB',
+                    default=60)
+parser.add_argument('--snr-samples', type=int, metavar='NUM',
+                    help='Number of SNR samples between SNR_MIN and SNR_MAX',
+                    default=26)
 parser.add_argument('-o', '--output', type=str, metavar='FILE',
                     help='CSV file where to save simulation data',
                     default=None)
@@ -75,7 +84,7 @@ parser.add_argument('--number-user', type=int, metavar='NUM',
 args = parser.parse_args()
 
 # Initialization of some auxiliary arrays
-snr_dB = np.linspace(10, 60, 26) # SNR in dB
+snr_dB = np.linspace(args.snr_min, args.snr_max, args.snr_samples) # SNR in dB
 snr_linear = 10.0 ** (snr_dB / 10.0)  # SNR linear
 out_probability_system = np.zeros((args.monte_carlo_samples, len(snr_dB)))
 out_probability_secondary_user = np.zeros((args.monte_carlo_samples, len(snr_dB)))
@@ -198,24 +207,33 @@ if args.output != None:
 
 # Plot simulation results if --plot option was given
 if args.plot:
+
     # Outage probability
-   # plt.semilogy(snr_dB, out_prob_mean, "go-", label="System", linewidth=2)
     plt.semilogy(snr_dB, out_prob_primary, "b.-", label="Primary user", linewidth=1)
     plt.semilogy(snr_dB, out_prob_secondary, "r.-", label="Secondary user", linewidth=1)
     plt.xlabel("SNR (dB)")
     plt.ylabel("Outage Probability")
     plt.legend(loc="lower left")
-    plt.xlim(10, 40)
+
+    # Determine the highest index of the outage probability arrays containing
+    # values > 0
+    i_max = len(snr_dB) - 1
+    for i in range(len(snr_dB) - 1, 0, -1):
+        if out_prob_primary[i] == 0 and out_prob_secondary[i] == 0:
+            i_max = i
+        else:
+            break
+
+    # Adjust plot
+    plt.xlim(args.snr_min, snr_dB[i_max])
 
     # Average Achievable Rate of the users
     plt.figure()
     plt.plot(snr_dB, rate_mean_primary_user, "b.-", label="primary user", linewidth=1)
-    plt.plot(
-        snr_dB, rate_mean_secondary_user, "r.-", label="secondary user", linewidth=1
-    )
-    plt.xlim(10, 60)
+    plt.plot(snr_dB, rate_mean_secondary_user, "r.-", label="secondary user", linewidth=1)
     plt.xlabel("SNR (dB)")
     plt.ylabel("Achievable rate (bits/s/Hz)")
     plt.legend(loc="upper left")
+    plt.xlim(args.snr_min, args.snr_max)
 
     plt.show()
