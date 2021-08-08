@@ -18,4 +18,7 @@ setuptools.setup(
     entry_points = {
         'console_scripts': ['uavnoma=uavnoma.command_line:main'],
     },
+    extras_require = {
+        'dev' : [ 'pytest', 'pytest-cov', 'pytest-console-scripts', 'codecov' ]
+    }
 )
