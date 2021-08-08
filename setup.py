@@ -19,6 +19,12 @@ setuptools.setup(
         'console_scripts': ['uavnoma=uavnoma.command_line:main'],
     },
     extras_require = {
-        'dev' : [ 'pytest', 'pytest-cov', 'pytest-console-scripts', 'codecov' ]
+        'dev' : [
+            'pytest',
+            'pytest-cov',
+            'pytest-console-scripts',
+            'coverage',
+            'codecov'
+        ]
     }
 )

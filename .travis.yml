@@ -5,14 +5,11 @@ python:
 
 # command to install dependencies
 install:
-- pip install numpy
-- pip install matplotlib
-- pip install codecov
-- pip install . uavnoma
+- pip install .[dev]
 
 # command to run tests
 script:
-- python tests/test_uavnoma.py pytest
+- pytest
 - coverage run -m --source=uavnoma pytest
 
 # Push the results back to codecov
