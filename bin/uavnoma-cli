@@ -110,8 +110,12 @@ assert (sum_power > 0) and (
 
 for mc in range(args.monte_carlo_samples):
     # Position UAV and users
-    uav_axis_x, uav_axis_y, uav_height = uavnoma.random_position_uav(args.number_uav, args.radius_uav, args.uav_height_mean)
-    user_axis_x, user_axis_y = uavnoma.random_position_users(args.number_user, args.radius_user)
+    uav_axis_x, uav_axis_y, uav_height = uavnoma.random_position_uav(args.number_uav,
+                                                                     args.radius_uav,
+                                                                     args.uav_height_mean)
+
+    user_axis_x, user_axis_y = uavnoma.random_position_users(args.number_user,
+                                                             args.radius_user)
 
     s, sigma = uavnoma.fading_rician(args.rician_factor, args.power_los)
 
@@ -149,41 +153,44 @@ for mc in range(args.monte_carlo_samples):
             args.sic_ip,
         )
 
-        system_average_rate[mc, sn] = uavnoma.average_rate(rate_primary_user[mc, sn], rate_secondary_user[mc, sn])
+        system_average_rate[mc, sn] = uavnoma.average_rate(rate_primary_user[mc, sn],
+                                                           rate_secondary_user[mc, sn])
 
         # Calculating of outage probability of the system
-        out_probability_system[mc, sn], out_probability_primary_user[mc, sn], out_probability_secondary_user[mc, sn] = uavnoma.outage_probability(
+        out_probability_system[mc, sn], out_probability_primary_user[mc, sn],
+        out_probability_secondary_user[mc, sn] = uavnoma.outage_probability(
             rate_primary_user[mc, sn],
             rate_secondary_user[mc, sn],
             args.target_rate_primary_user,
             args.target_rate_secondary_user,
         )
 
-# Outage Probability
-out_prob_mean = np.mean(
-    out_probability_system, axis=0
-)  # Outage probability of the System
-out_prob_primary = np.mean(
-    out_probability_primary_user, axis=0
-)  # Outage probability of the Primary User
-out_prob_secondary = np.mean(
-    out_probability_secondary_user, axis=0
-)  # Outage probability of the Secondary User
+## Outage Probability
 
-# Achievable Rate
-average_rate_mean = np.mean(
-    system_average_rate, axis=0
-)  # Average achievable rate of the system
-rate_mean_primary_user = np.mean(
-    rate_primary_user, axis=0
-)  # Average achievable rate of the Primary User
-rate_mean_secondary_user = np.mean(
-    rate_secondary_user, axis=0
-)  # Average achievable rate of the Secondary User
+# Outage probability of the System
+out_prob_mean = np.mean(out_probability_system, axis=0)
+
+# Outage probability of the Primary User
+out_prob_primary = np.mean(out_probability_primary_user, axis=0)
+
+# Outage probability of the Secondary User
+out_prob_secondary = np.mean(out_probability_secondary_user, axis=0)
+
+## Achievable Rate
+
+# Average achievable rate of the system
+average_rate_mean = np.mean(system_average_rate, axis=0)
+
+# Average achievable rate of the Primary User
+rate_mean_primary_user = np.mean(rate_primary_user, axis=0)
+
+# Average achievable rate of the Secondary User
+rate_mean_secondary_user = np.mean(rate_secondary_user, axis=0)
 
 
 # Put all mean data into a numpy matrix / table
-all_data_np = np.c_[ snr_dB, out_prob_mean, out_prob_primary, out_prob_secondary, average_rate_mean, rate_mean_primary_user, rate_mean_secondary_user]
+all_data_np = np.c_[ snr_dB, out_prob_mean, out_prob_primary, out_prob_secondary,
+                     average_rate_mean, rate_mean_primary_user, rate_mean_secondary_user]
 
 # Convert numpy matrix to Pandas dataframe with column names
 all_data_df = pd.DataFrame(all_data_np,
@@ -215,8 +222,7 @@ if args.plot:
     plt.ylabel("Outage Probability")
     plt.legend(loc="lower left")
 
-    # Determine the highest index of the outage probability arrays containing
-    # values > 0
+    # Determine the highest index of the outage probability arrays containing values > 0
     i_max = len(snr_dB) - 1
     for i in range(len(snr_dB) - 1, 0, -1):
         if out_prob_primary[i] == 0 and out_prob_secondary[i] == 0:
