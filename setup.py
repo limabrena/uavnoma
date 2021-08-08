@@ -15,7 +15,7 @@ setuptools.setup(
     packages = ['uavnoma'],
     install_requires = ['numpy', 'pandas', 'tabulate', 'matplotlib'],
     python_requires = '>=3.8',
-    scripts=['bin/uavnoma-cli'],
-    include_package_data = True,
-
+    entry_points = {
+        'console_scripts': ['uavnoma=uavnoma.command_line:main'],
+    },
 )
