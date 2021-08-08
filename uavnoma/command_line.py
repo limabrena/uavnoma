@@ -63,6 +63,9 @@ def main():
     parser.add_argument('--snr-samples', type=int, metavar='NUM',
                         help='Number of SNR samples between SNR_MIN and SNR_MAX',
                         default=26)
+    parser.add_argument('--seed', type=int, metavar="SEED",
+                        help="Seed for pseudo-random number generator",
+                        default = None)
     parser.add_argument('-o', '--output', type=str, metavar='FILE',
                         help='CSV file where to save simulation data',
                         default=None)
@@ -83,6 +86,10 @@ def main():
 
     # Parse command line arguments
     args = parser.parse_args()
+
+    # If a seed was defined, set it
+    if (args.seed != None):
+        np.random.seed(args.seed)
 
     # Initialization of some auxiliary arrays
     snr_dB = np.linspace(args.snr_min, args.snr_max, args.snr_samples) # SNR in dB
