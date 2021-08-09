@@ -2,9 +2,7 @@ import numpy as np
 import math
 
 from uavnoma.generate_values import *
-from uavnoma.performance_metrics import * 
-
-
+from uavnoma.performance_metrics import *
 
 # Variable simulation parameters
 monte_carlo_samples = 100000  # Monte Carlo samples
@@ -108,31 +106,31 @@ def test_rician_parameters():
     s, sigma = fading_rician(rician_factor, power_los)
     assert s >= 0  # Non-negative
     assert sigma >= 0  # Non-negative
- 
+
 
 def test_channel_gain():
     channel_gain_primary, channel_gain_secondary = generate_channel(
-        s, sigma, number_user, x_u, y_u, x_r, y_r, uav_heigth_mean, path_loss 
+        s, sigma, number_user, x_u, y_u, x_r, y_r, uav_heigth_mean, path_loss
     )
     assert channel_gain_primary >= 0  # Non-negative
     assert channel_gain_secondary >= 0  # Non-negative
-    assert channel_gain_primary <= channel_gain_secondary  
+    assert channel_gain_primary <= channel_gain_secondary
 
 
 def test_rate_primary_user():
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
-            s, 
-            sigma, 
-            number_user, 
+            s,
+            sigma,
+            number_user,
             x_u,
-            y_u, 
-            x_r, 
-            y_r, 
-            uav_heigth_mean, 
+            y_u,
+            x_r,
+            y_r,
+            uav_heigth_mean,
             path_loss,
         )
-        assert channel_gain_primary <= channel_gain_secondary  
+        assert channel_gain_primary <= channel_gain_secondary
         for sn in range(0, len(snr_linear)):
             rate_primary_user[mc, sn] = calculate_instantaneous_rate_primary(
                 channel_gain_primary,
@@ -147,40 +145,40 @@ def test_rate_primary_user():
 def test_rate_secondary_user():
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
-            s, 
-            sigma, 
-            number_user, 
-            x_u, 
-            y_u, 
-            x_r, 
-            y_r, 
-            uav_heigth_mean, 
+            s,
+            sigma,
+            number_user,
+            x_u,
+            y_u,
+            x_r,
+            y_r,
+            uav_heigth_mean,
             path_loss,
         )
         assert channel_gain_primary <= channel_gain_secondary  # Must be in descending order
         for sn in range(0, len(snr_linear)):
             rate_secondary_user[mc,sn] = calculate_instantaneous_rate_secondary(
-                channel_gain_secondary, 
-                snr_linear[sn], 
-                power_secondary, 
-                power_primary, 
-                hardw_ip, 
+                channel_gain_secondary,
+                snr_linear[sn],
+                power_secondary,
+                power_primary,
+                hardw_ip,
                 sic_ip
             )
-            
+
     assert rate_secondary_user.all() >= 0  # Non-negative
 
 def test_average_rate():
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
-            s, 
-            sigma, 
-            number_user, 
-            x_u, 
-            y_u, 
-            x_r, 
-            y_r, 
-            uav_heigth_mean, 
+            s,
+            sigma,
+            number_user,
+            x_u,
+            y_u,
+            x_r,
+            y_r,
+            uav_heigth_mean,
             path_loss,
         )
         for sn in range(0, len(snr_linear)):
@@ -192,15 +190,15 @@ def test_average_rate():
                 hardw_ip,
             )
             rate_secondary_user[mc,sn] = calculate_instantaneous_rate_secondary(
-                channel_gain_secondary, 
-                snr_linear[sn], 
-                power_secondary, 
-                power_primary, 
-                hardw_ip, 
+                channel_gain_secondary,
+                snr_linear[sn],
+                power_secondary,
+                power_primary,
+                hardw_ip,
                 sic_ip,
             )
             system_average_rate[mc, sn] = average_rate(
-                rate_primary_user[mc, sn], 
+                rate_primary_user[mc, sn],
                 rate_primary_user[mc, sn],
             )
 
@@ -211,9 +209,9 @@ def test_average_rate():
 def test_outage_probability():
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
-            s, sigma, number_user, x_u, y_u, x_r, y_r, uav_heigth_mean, path_loss 
+            s, sigma, number_user, x_u, y_u, x_r, y_r, uav_heigth_mean, path_loss
         )
-        for sn in range(0, len(snr_linear)):  
+        for sn in range(0, len(snr_linear)):
             rate_primary_user[mc, sn] = calculate_instantaneous_rate_primary(
                 channel_gain_primary,
                 snr_linear[sn],
@@ -222,20 +220,20 @@ def test_outage_probability():
                 hardw_ip,
             )
             rate_secondary_user[mc,sn] = calculate_instantaneous_rate_secondary(
-                channel_gain_secondary, 
-                snr_linear[sn], 
-                power_secondary, 
-                power_primary, 
-                hardw_ip, 
+                channel_gain_secondary,
+                snr_linear[sn],
+                power_secondary,
+                power_primary,
+                hardw_ip,
                 sic_ip,
-            )  
+            )
             (
                 out_probability_system[mc,sn],
                 out_probability_primary_user[mc,sn],
                 out_probability_secondary_user[mc,sn],
-            ) = outage_probability( 
+            ) = outage_probability(
                     rate_primary_user[mc, sn],
-                    rate_secondary_user[mc, sn], 
+                    rate_secondary_user[mc, sn],
                     target_rate_primary_user,
                     target_rate_secondary_user,
                 )
@@ -251,3 +249,7 @@ def test_outage_probability():
         or out_probability_secondary_user.all() <= 1
     ), "Invalid, must be non-negative."
 
+def test_command_line_script(script_runner):
+    ret = script_runner.run('uavnoma', '-s 100')
+    assert ret.success
+    assert ret.stderr == ''
