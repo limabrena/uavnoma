@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import tabulate as tab
 import matplotlib.pyplot as plt
+from uavnoma.parameters_validation import validation
 import uavnoma
 
 def main():
@@ -17,25 +18,25 @@ def main():
 
     # Specify arguments to parse
     parser.add_argument('-s', '--monte-carlo-samples', type=int, metavar='SAMPLES',
-                        help='Monte Carlo samples', default=10000)
+                        help='Monte Carlo samples', default=1000)
     parser.add_argument('-p', '--power-los', type=float, metavar='POWER_LOS',
-                        help='Power of line-of-sight path and scattered paths, 1 <= POWER_LOS <= 2',
-                        default=1.0)
-    parser.add_argument('-f', '--rician-factor', type=int, metavar='FACTOR',
-                        help='Rician factor value, 10<= FACTOR <= 15',
-                        default=15)
+                        help='Power of line-of-sight path and scattered paths, 1.0 <= POWER_LOS <= 2.0',
+                        default=2.0)
+    parser.add_argument('-f', '--rician-factor', type=float, metavar='FACTOR',
+                        help='Rician factor value, 10<= FACTOR <= 18',
+                        default=15.0)
     parser.add_argument('-l', '--path-loss', type=float, metavar='LOSS',
                         help='Path loss exponent, 2 <= LOSS <= 3',
                         default=2.2)
     parser.add_argument('-r', '--radius-uav', type=float, metavar='RADIUS',
                         help='Radius fly trajectory of the UAV in meters',
                         default=2.0)
-    parser.add_argument('-u', '--radius-user', type=float, metavar='RADIUS',
+    parser.add_argument('-ur', '--radius-user', type=float, metavar='RADIUS',
                         help='Distribution radius of users in the cell in meters',
-                        default=10.0)
-    parser.add_argument('-m', '--uav-height-mean', type=float, metavar='MEAN',
-                        help='Average UAV flight height',
                         default=15.0)
+    parser.add_argument('-uh', '--uav-height-mean', type=float, metavar='MEAN',
+                        help='Average UAV flight height',
+                        default=20.0)
     parser.add_argument('-t1', '--target-rate-primary-user', type=float, metavar='RATE',
                         help='Target rate bits/s/Hertz  primary user',
                         default=0.5)
@@ -44,10 +45,10 @@ def main():
                         default=0.5)
     parser.add_argument('-hi', '--hardw-ip', type=float, metavar='COEFF',
                         help='Residual Hardware Impairments coefficient, 0 <= COEFF <=1',
-                        default=0.0)
+                        default=0.1)
     parser.add_argument('-si', '--sic-ip', type=float, metavar='COEFF',
                         help='Residual Imperfect SIC coefficient, 0 <= COEFF <=1',
-                        default=0.0)
+                        default=0.1)
     parser.add_argument('-p1', '--power-coeff-primary', type=float, metavar='COEFF',
                         help='The value of power coefficient allocation of the Primary User',
                         default=0.8)
@@ -86,10 +87,7 @@ def main():
 
     # Parse command line arguments
     args = parser.parse_args()
-
-    # If a seed was defined, set it
-    if (args.seed != None):
-        np.random.seed(args.seed)
+    args = validation(args)
 
     # Initialization of some auxiliary arrays
     snr_dB = np.linspace(args.snr_min, args.snr_max, args.snr_samples) # SNR in dB
@@ -102,19 +100,7 @@ def main():
     rate_primary_user = np.zeros((args.monte_carlo_samples, len(snr_dB)))
 
 
-    # ------------------------------------------------------------------------------------
-    # Fixed power allocation
-    #power_coeff_primary = float(input('Enter the value of power coefficient allocation of the Primary User: '))
-    #power_coeff_secondary = 1 - power_coeff_primary
-    assert (
-        args.power_coeff_primary >= args.power_coeff_secondary
-    ),  "The power coefficient of the primary user must be greater than that of the Secondary user."
-
-    sum_power = args.power_coeff_primary + args.power_coeff_secondary
-    assert (sum_power > 0) and (
-        sum_power <= 1
-    ) , "The sum of the powers must be > 0 or <= 1."
-
+    # ------------------------------------------------------------------------------------ 
 
     for mc in range(args.monte_carlo_samples):
         # Position UAV and users
@@ -201,7 +187,7 @@ def main():
 
     # Convert numpy matrix to Pandas dataframe with column names
     all_data_df = pd.DataFrame(all_data_np,
-                            columns = ['snr_DB', 'p_outage_sys', 'p_outage_usr1',
+                            columns = ['snr_dB', 'p_outage_sys', 'p_outage_usr1',
                                         'p_outage_usr2', 'avg_arate_sys',
                                         'avg_arate_usr1', 'avg_arate_usr2' ])
 

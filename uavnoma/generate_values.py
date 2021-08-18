@@ -10,10 +10,10 @@ import math
 def __init__():
     pass
 
-def random_position_uav(number_UAV, radius_UAV, uav_heigth):
+def random_position_uav(number_UAV, radius_UAV, uav_height):
     """Returns a random UAV position based on 3D Cartesian coordinates.
 
-            x_r: x-axis | y_r: y-axis | z_r: heigth
+            x_r: x-axis | y_r: y-axis | z_r: height
 
     `theta_r:` randomly generates an angle
 
@@ -31,13 +31,13 @@ def random_position_uav(number_UAV, radius_UAV, uav_heigth):
 
     Return:
 
-        x_r, y_r, z_r -- position in the x-axis, y-axis and heigth of the UAV.
+        x_r, y_r, z_r -- position in the x-axis, y-axis and height of the UAV.
     """
     theta_r = np.random.rand(number_UAV, 1) * (math.pi * 2)
     rho_r = radius_UAV
     x_r = rho_r * np.cos(theta_r)
     y_r = rho_r * np.sin(theta_r)
-    z_r = np.random.uniform(uav_heigth - 5.0, uav_heigth + 5.0)
+    z_r = np.random.uniform(uav_height - 5.0, uav_height + 5.0)
     return x_r, y_r, z_r
 
 def random_position_users(number_users, radiusUser):
@@ -80,9 +80,7 @@ def fading_rician(K, P_los):
     """
     # Fading modeled by Rician distribution
     s = np.sqrt(K / (K + 1) * P_los)  # Non-Centrality Parameter (mean)
-    assert s >= 0  # Non-negative
     sigma = P_los / np.sqrt(2 * (K + 1))  # Standard deviation
-    assert s >= 0  # Non-negative
     return s, sigma
 
 def generate_channel(
@@ -121,7 +119,7 @@ def generate_channel(
 
         uav_Y -- position axis y of UAV.
 
-        uav_z -- UAV heigth.
+        uav_z -- UAV height.
 
         path_loss -- path loss exponent.
 
@@ -138,6 +136,7 @@ def generate_channel(
 
     for uu in range(number_user):
 
+        # Generate small scale fading according to Rician Distribution
         small_scale_fading = np.sqrt(
             (np.random.normal(s, sigma) ** 2)
             + 1j * (np.random.normal(0, sigma) ** 2)
@@ -147,19 +146,15 @@ def generate_channel(
             (user_X[uu] - uav_X) ** 2 + (user_Y[uu] - uav_Y) ** 2 + uav_Z ** 2
         )
         # Generate path loss atenuation
-        large_scale_fading = sqrt((distance[uu])**(- path_loss))
+        large_scale_fading = sqrt( (distance[uu])**( path_loss))
 
         # Generate channel coefficients
         h_n[uu] = (
-            np.abs(small_scale_fading * large_scale_fading )
+            np.abs(small_scale_fading / large_scale_fading )
             ** 2
         )
 
-
-    #channelGain = sorted(h_n, reverse=True)
     channel_primary = np.min(h_n)
     channel_secondary = np.max(h_n)
-    #print('pri', channel_primary)
-    #print('sec', channel_secondary)
 
     return channel_primary, channel_secondary
