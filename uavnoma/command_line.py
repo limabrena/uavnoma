@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 import tabulate as tab
 import matplotlib.pyplot as plt
-from uavnoma.parameters_validation import validation
 import uavnoma
 
 def main():
@@ -87,7 +86,7 @@ def main():
 
     # Parse command line arguments
     args = parser.parse_args()
-    args = validation(args)
+    args = uavnoma.validation(args)
 
     # Initialization of some auxiliary arrays
     snr_dB = np.linspace(args.snr_min, args.snr_max, args.snr_samples) # SNR in dB

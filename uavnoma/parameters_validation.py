@@ -1,3 +1,6 @@
+"""
+    This script performs parameter validation.
+"""
 import sys
 import numpy as np
 

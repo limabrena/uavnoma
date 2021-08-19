@@ -21,19 +21,18 @@ The user can simply run it from the downloaded folder, provided the necessary re
 
 ### Usage
 
+After installing the package, to run the script on your terminal simply run the following command:
+```
+$ uavnoma
+```
+
 An example on how to use a package can be seen in the examples folder.
 The folder contains a tutorial file [`uavnoma_tutorial.ipynb`](https://github.com/limabrena/uavnoma/blob/main/example/uavnoma_tutorial.ipynb) and an implementation example of an UAV NOMA system using the *uavnoma* package.
-Running the example file can be done with the following command from the project's root folder:
 
-```
-$ python plot_figures.py
-```
-
-or access the project folder from an IDE.
 
 ### Documentation
 
-Project documentation is generated using [pdoc3](https://pdoc3.github.io/pdoc/). To generate the project documentation, running the following command in the folder `uavnoma`.
+Project documentation is generated using [pdoc3](https://pdoc3.github.io/pdoc/). To generate the project documentation, running the following command in the project folder `uavnoma`.
 
 ```
 pdoc3 --html --output-dir docs uavnoma/

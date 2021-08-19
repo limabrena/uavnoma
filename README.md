@@ -27,14 +27,21 @@ The following libraries are required:
 
 - `numpy`
 - `matplotlib`
+- `pandas`
+- `tabualtes`
+- `argparse`
+
 
 ## How to install
 
-To install the *uavnoma* package, running the following command:
+To install the *uavnoma* package, running the following command in the uavnoma project folder:
 
 ```
-$ pip install uavnoma
+$ pip install -e .[dev]
 ```
+
+This way, the package is installed in development mode. As a result, the pytest dependencies/plugins are installed.
+
 
 ### From GitHub
 
