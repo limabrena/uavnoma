@@ -5,6 +5,7 @@ import pytest
 import numpy as np
 import tempfile
 import os
+from unittest.mock import patch
 
 # Script name
 script_name = 'uavnoma'
@@ -140,3 +141,11 @@ def test_file_creation(script_runner):
         assert result.success          # Successful run
         assert result.returncode == 0  # Code 0 means successful run
         assert len(result.stderr) == 0 # No output in error output stream
+
+# Test successful run when generating plots (the plots themselves are not tested)
+@patch("uavnoma.command_line.plt") # Avoid getting stuck when calling plot.show()
+def test_success_plot(plt, script_runner):
+    result = script_runner.run(script_name, '--plot')
+    assert result.success          # Successful run
+    assert result.returncode == 0  # Code 0 means successful run
+    assert len(result.stderr) == 0 # No output in error output stream
