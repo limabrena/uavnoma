@@ -7,9 +7,6 @@ import numpy as np
 from numpy import sqrt
 import math
 
-def __init__():
-    pass
-
 def random_position_uav(number_UAV, radius_UAV, uav_height):
     """Returns a random UAV position based on 3D Cartesian coordinates.
 
