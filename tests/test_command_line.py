@@ -40,6 +40,7 @@ data_individual_params_invalid = [
     (['-s', str(10), '-f', str(20.0)]),
     ([ '-f', str(20.0)]),
     (['-p1', str(0), '-p2', str(0.8)]),
+    (['-p1', str(0.6), '-p2', str(0.6)]),
     (['-hi', str(2), '--sic-ip', str(2)]),
     (['--sic-ip', str(2)]),
     (['-ur', str(50)]),
@@ -51,7 +52,6 @@ data_individual_params_invalid = [
     (['--snr-max', str(10)]),
     (['--number-uav', str(2)]),
     (['--number-user', str(4)]),
-    # ([]),
 ]
 
 # How many values of each parameter to test in combination
@@ -77,6 +77,7 @@ p2_range = np.linspace(0.1, 1.0, num=num_values)
 snr_min_range = np.linspace(10.0, 15.0, num=num_values)
 snr_max_range = np.linspace(30.0, 80.0, num=num_values)
 snr_samples_range = [round(x) for x in np.linspace(10, 40, num=num_values)]
+seed_range = [123] # Use just one seed, otherwise it takes too long
 
 data_combination_params_valid = [
     (
@@ -84,7 +85,7 @@ data_combination_params_valid = [
         '-ur', str(ur), '-uh', str(uh), '-t1', str(t1), '-t2', str(t2),
         '-hi', str(hi), '-si', str(si), '-p1', str(p1), '-p2', str(p2),
         '--snr-min', str(snr_min), '--snr-max', str(snr_max),
-        '--snr-samples', str(snr_samples)
+        '--snr-samples', str(snr_samples), '--seed', str(seed)
     )
     for s in s_range
     for p in p_range
@@ -102,6 +103,7 @@ data_combination_params_valid = [
     for snr_max in snr_max_range
     for snr_min in snr_min_range
     for snr_samples in snr_samples_range
+    for seed in seed_range
 ]
 
 # Test valid parameters (individual + combinations)
