@@ -5,6 +5,7 @@
 
 import numpy as np
 from numpy import sqrt
+import pytest
 import math
 
 def random_position_uav(number_UAV, radius_UAV, uav_height):
@@ -36,6 +37,7 @@ def random_position_uav(number_UAV, radius_UAV, uav_height):
     y_r = rho_r * np.sin(theta_r)
     z_r = np.random.uniform(uav_height - 5.0, uav_height + 5.0)
     return x_r, y_r, z_r
+
 
 def random_position_users(number_users, radiusUser):
     """Returns a random ground users position based on 2D Cartesian coordinates.

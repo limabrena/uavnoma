@@ -28,7 +28,7 @@ The following libraries are required:
 - `numpy`
 - `matplotlib`
 - `pandas`
-- `tabualtes`
+- `tabulate`
 - `argparse`
 
 
