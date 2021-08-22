@@ -108,14 +108,14 @@ data_combination_params_valid = [
 ]
 
 # Test valid parameters (individual + combinations)
-""" @pytest.mark.parametrize('params', data_individual_params_valid + data_combination_params_valid)
+@pytest.mark.parametrize('params', data_individual_params_valid + data_combination_params_valid)
 def test_success(script_runner, params):
     result = script_runner.run(script_name, *params)
     assert result.success          # Successful run
     assert result.returncode == 0  # Code 0 means successful run
     assert len(result.stdout) > 0  # Measurable output in standard output stream
     assert len(result.stderr) == 0 # No output in error output stream
- """
+
 # Test invalid individual parameters
 @pytest.mark.parametrize('params', data_individual_params_invalid)
 def test_failure(script_runner, params):

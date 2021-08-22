@@ -5,7 +5,6 @@
 
 import numpy as np
 from numpy import sqrt
-import pytest
 import math
 
 def random_position_uav(number_UAV, radius_UAV, uav_height):
@@ -65,6 +64,7 @@ def random_position_users(number_users, radiusUser):
     y_u = rho_u * np.sin(theta_u)
     return x_u, y_u
 
+
 def fading_rician(K, P_los):
     """Returns the mean and standard deviation to model fading from the Rician distribution.
 
@@ -81,6 +81,7 @@ def fading_rician(K, P_los):
     s = np.sqrt(K / (K + 1) * P_los)  # Non-Centrality Parameter (mean)
     sigma = P_los / np.sqrt(2 * (K + 1))  # Standard deviation
     return s, sigma
+
 
 def generate_channel(
     s, sigma, number_user, user_X, user_Y, uav_X, uav_Y, uav_Z, path_loss
