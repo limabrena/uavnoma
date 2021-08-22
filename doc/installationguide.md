@@ -22,13 +22,16 @@ The user can simply run it from the downloaded folder, provided the necessary re
 ### Usage
 
 After installing the package, to run the script on your terminal simply run the following command:
+
 ```
 $ uavnoma
 ```
 
-An example on how to use a package can be seen in the examples folder.
-The folder contains a tutorial file [`uavnoma_tutorial.ipynb`](https://github.com/limabrena/uavnoma/blob/main/example/uavnoma_tutorial.ipynb) and an implementation example of an UAV NOMA system using the *uavnoma* package.
+An example on how to use a package can be seen in the uavnoma folder. The script contains an implementation example of an UAV NOMA system using the *uavnoma* package. 
 
+```
+$ command_line.py
+```
 
 ### Documentation
 
