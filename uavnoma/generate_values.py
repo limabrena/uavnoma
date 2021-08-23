@@ -65,7 +65,7 @@ def random_position_users(number_users, radiusUser):
     return x_u, y_u
 
 
-def fading_rician(K, P_los):
+def fading_rician(K, P_los):  
     """Returns the mean and standard deviation to model fading from the Rician distribution.
 
     Arguments:
@@ -77,10 +77,11 @@ def fading_rician(K, P_los):
     Return:
         s, sigma -- mean and standard deviation to model fading from the Rician distribution.
     """
+    
     # Fading modeled by Rician distribution
     s = np.sqrt(K / (K + 1) * P_los)  # Non-Centrality Parameter (mean)
     sigma = P_los / np.sqrt(2 * (K + 1))  # Standard deviation
-    return s, sigma
+    return (s, sigma)  
 
 
 def generate_channel(

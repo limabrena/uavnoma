@@ -54,7 +54,6 @@ $ git clone https://github.com/limabrena/uavnoma.git
 * [*uavnoma* package documentation](https://limabrena.github.io/uavnoma/docs/index.html)
 * [Developer's guide](https://limabrena.github.io/uavnoma/docs/index.html#developers-guide)
 * [Scenario Description](https://limabrena.github.io/uavnoma/docs/index.html#scenario-description)
-* [Tutorial for the uavnoma functions](example/uavnoma_tutorial.ipynb)
 
 ## License
 
