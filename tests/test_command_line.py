@@ -12,7 +12,7 @@ script_name = 'uavnoma'
 
 # Valid parameters, for testing one or two of them at a time
 # Here we use both short and long forms
-data_individual_params_valid = [
+data_params_valid_individual = [
     (['-h']),     # Request for help is a valid input
     (['--help']), # Request for help is a valid input
     ([]),         # No parameters is valid input
@@ -35,7 +35,7 @@ data_individual_params_valid = [
 
 # Invalid parameters, for testing one or two of them at a time
 # No need to repeat both short and long forms, use only one of them
-data_individual_params_invalid = [
+data_params_invalid_individual = [
     (['-p', str(-1.0)]),
     (['-l', str(-2.0)]),
     (['-s', str(10), '-f', str(20.0)]),
@@ -81,7 +81,7 @@ snr_samples_range = [round(x) for x in np.linspace(10, 40, num=num_values)]
 seed_range = [123] # Use just one seed, otherwise it takes too long
 
 # Create valid combinations of parameters
-data_combination_params_valid = [
+data_params_valid_combination = [
     (
         '-s', str(s), '-p', str(p), '-f', str(f), '-l', str(l), '-r', str(r),
         '-ur', str(ur), '-uh', str(uh), '-t1', str(t1), '-t2', str(t2),
@@ -108,11 +108,20 @@ data_combination_params_valid = [
     for seed in seed_range
 ]
 
-# Test valid parameters (individual + combinations)
+# Test valid individual parameters
+@pytest.mark.parametrize('params', data_params_valid_individual)
+def test_success_individual(script_runner, params):
+    subtest_success(script_runner, params)
+
 # This is a slow test, to avoid running it use `pytest -m "not slow"`
 @pytest.mark.slow
-@pytest.mark.parametrize('params', data_individual_params_valid + data_combination_params_valid)
-def test_success(script_runner, params):
+@pytest.mark.parametrize('params', data_params_valid_combination)
+def test_success_combination(script_runner, params):
+    subtest_success(script_runner, params)
+
+# This function is not directly a test; it will be called by other actual test
+# functions
+def subtest_success(script_runner, params):
     result = script_runner.run(script_name, *params)
     assert result.success          # Successful run
     assert result.returncode == 0  # Code 0 means successful run
@@ -120,7 +129,7 @@ def test_success(script_runner, params):
     assert len(result.stderr) == 0 # No output in error output stream
 
 # Test invalid individual parameters
-@pytest.mark.parametrize('params', data_individual_params_invalid)
+@pytest.mark.parametrize('params', data_params_invalid_individual)
 def test_failure(script_runner, params):
     result = script_runner.run(script_name, *params)
     assert not result.success     # Unsuccessful run
