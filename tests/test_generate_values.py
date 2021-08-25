@@ -26,7 +26,7 @@ data_parameter_position_uav_valid = [
 
 data_parameter_position_uav_invalid = [
     # number_uav, radius_uav, height_uav
-    ([1, 6, -2]), # Invalid
+    ([1, 15, -2]), # Invalid
     ([1, 4, 25]), # Valid
 ]
 
@@ -43,15 +43,15 @@ data_parameter_rician_fading_invalid = [
 ]
 
 data_parameter_generate_channel_valid = [
-    # number_user, axis x user position, axis y user position, axis x uav position, axis y uav position, uav mean height, path_loss, rician_factor, power_los
-    ([2, 10.0, 6.0, 2.0, 4.0, 35.0, 2.0, 15.0, 1.0]),  # Valid
-    ([2, 10.0, 10.0, 2.0, 3.0, 40.0, 2.0, 16.0, 2.0]), # Valid
+    # number_user, array axis x user position, array axis y user position,  axis x uav position, axis y uav position, uav mean height, path_loss, mean rician distribution, standard deviation
+    ([2, np.array([10.0, 6.0]), np.array([2.0, 8.0]), 2.0, 4.0, 35.0, 2.0, 0.5, 1.3]),  # Valid
+    ([2, np.array([14.0, -2.0]), np.array([2.0, -12.0]), 1.0, 3.0, 40.0, 2.0, 0.1, 1.0]), # Valid
 ]
 
 data_parameter_generate_channel_invalid = [
-    # number_user, axis x user position, axis y user position, axis x uav position, axis y uav position, uav mean height, path_loss, rician_factor, power_los
-    ([4, 2.0, 15.0, 4.0, 2.0, 20.0, 2.2, 18.0, 2.0]),  # Invalid
-    ([2, 8.0, 15.0, 2.0, 3.0, 40.0, 8.0, 3.0, 4.0]),   # Invalid
+    # number_user, array axis x user position, array axis y user position, axis x uav position, axis y uav position, uav mean height, path_loss, mean rician distribution, standard deviation
+    ([4, np.array([3.0, 10.0]), np.array([7.0, 15.0]), 2.0, 4.0, 40.0, 8.0, -0.5, -2.5]),  # Invalid
+    ([2, np.array([2.0, -15.0]), np.array([-2.0, 10.0]), 7.0, 3.0, 25.0, -1.0, -3.0, 4.0]),   # Invalid
 ]
 
 #
@@ -86,7 +86,7 @@ def test_position_uav_valid(number_uav, radius_uav, height_uav):
 
 # Test uav position (invalid parameters)
 @pytest.mark.parametrize("number_uav, radius_uav, height_uav", data_parameter_position_uav_invalid)
-def test_position_uav_valid(number_uav, radius_uav, height_uav):
+def test_position_uav_invalid(number_uav, radius_uav, height_uav):
     # Although the parameters are invalid for the simulation as a whole, this
     # function will work its math without throwing exceptions
     random_position_uav(number_uav, radius_uav, height_uav)
@@ -108,25 +108,18 @@ def test_rician_parameters_invalid(rician_factor, power_los):
         fading_rician(rician_factor, power_los)
 
 # Test generate channel (valid parameters)
-@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, rician_factor, power_los", data_parameter_generate_channel_valid)
-def test_channel_gain_valid(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, rician_factor, power_los):
-    # TODO We should no depend on fading_rician() to get s and sigma; we should
-    # specify s and sigma directly since we're only testing generate_channel()
-    # in isolation
-    s, sigma = fading_rician(rician_factor, power_los)  # Fading modeled by Rician distribution
+@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma", data_parameter_generate_channel_valid)
+def test_channel_gain_valid(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma):
+    assert number_user == 2
     channel_gain_primary, channel_gain_secondary = generate_channel(
         s, sigma, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss
-    )
+    )    
     assert channel_gain_primary >= 0  # Non-negative
     assert channel_gain_secondary >= 0  # Non-negative
     assert channel_gain_primary <= channel_gain_secondary
 
 # Test generate channel (invalid parameters)
-@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, rician_factor, power_los", data_parameter_generate_channel_invalid)
-def test_channel_gain_invalid(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, rician_factor, power_los):
-    # TODO We should no depend on fading_rician() to get s and sigma; we should
-    # specify s and sigma directly since we're only testing generate_channel()
-    # in isolation
-    s, sigma = fading_rician(rician_factor, power_los)  # Fading modeled by Rician distribution
-    # TODO What to expect here?
+@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma", data_parameter_generate_channel_invalid)
+def test_channel_gain_invalid(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma):
+    assert number_user == 2
     generate_channel(s, sigma, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss)
