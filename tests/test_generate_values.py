@@ -49,9 +49,12 @@ data_parameter_generate_channel_valid = [
 ]
 
 data_parameter_generate_channel_invalid = [
-    # number_user, array axis x user position, array axis y user position, axis x uav position, axis y uav position, uav mean height, path_loss, mean rician distribution, standard deviation
-    ([4, np.array([3.0, 10.0]), np.array([7.0, 15.0]), 2.0, 4.0, 40.0, 8.0, -0.5, -2.5]),  # Invalid
-    ([2, np.array([2.0, -15.0]), np.array([-2.0, 10.0]), 7.0, 3.0, 25.0, -1.0, -3.0, 4.0]),   # Invalid
+    # exception, number_user, array axis x user position, array axis y user position, axis x uav position, axis y uav position, uav mean height, path_loss, mean rician distribution, standard deviation
+
+    # This will throw an IndexError due to incorrect number of users (function only supports 2 users for now)
+    ([IndexError, 4, np.array([3.0, 10.0]), np.array([7.0, 15.0]), 2.0, 4.0, 40.0, 8.0, -0.5, 2.5]),
+    # This will throw a ValueError due to negative standard deviation
+    ([ValueError, 2, np.array([2.0, -15.0]), np.array([-2.0, 10.0]), 7.0, 3.0, 25.0, -1.0, -3.0, -4.0]),
 ]
 
 #
@@ -113,13 +116,13 @@ def test_channel_gain_valid(number_user, x_u, y_u, x_r, y_r, uav_height_mean, pa
     assert number_user == 2
     channel_gain_primary, channel_gain_secondary = generate_channel(
         s, sigma, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss
-    )    
+    )
     assert channel_gain_primary >= 0  # Non-negative
     assert channel_gain_secondary >= 0  # Non-negative
     assert channel_gain_primary <= channel_gain_secondary
 
 # Test generate channel (invalid parameters)
-@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma", data_parameter_generate_channel_invalid)
-def test_channel_gain_invalid(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma):
-    assert number_user == 2
-    generate_channel(s, sigma, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss)
+@pytest.mark.parametrize("exception, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma", data_parameter_generate_channel_invalid)
+def test_channel_gain_invalid(exception, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma):
+    with pytest.raises(exception):
+        generate_channel(s, sigma, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss)
