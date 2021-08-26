@@ -13,12 +13,24 @@ The **uavnoma** package allows the user to study the modeling of a UAV-NOMA netw
 
 The user can modify parameters and analyze the system's behavior. Based on this, new methods can be proposed to solve UAV trajectory problems, power allocation, user pairing, energy harvesting for UAV maintenance, decoding order and others.
 
-The package contains functions:
+The package contains functions for:
 
 - To calculate the position of the UAV and users
 - To generate the channel gain between UAV and users
 - To calculate of the Signal Interference Noise Ratio (SINR)
 - To analyze system performance using as metrics the instantaneous achievable rate and outage probability.
+
+A command line script is also included, allowing for anyone to experiment with the model without knowing or using Python. The user can run a simulation with default parameters using the following command:
+
+```
+uavnoma
+```
+
+The script is fully parameterizable, and the available parameters can be listed with:
+
+```
+uavnoma --help
+```
 
 ## Requirements
 

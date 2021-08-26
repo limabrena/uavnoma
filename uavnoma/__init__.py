@@ -14,3 +14,7 @@ from .performance_metrics import calculate_instantaneous_rate_primary
 from .performance_metrics import calculate_instantaneous_rate_secondary
 from .performance_metrics import average_rate
 from .performance_metrics import outage_probability
+
+__pdoc__ = {}
+__pdoc__["command_line.main"] = False
+__pdoc__["command_line.validate"] = False
