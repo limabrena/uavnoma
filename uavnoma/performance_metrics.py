@@ -4,9 +4,6 @@
 
 import numpy as np
 
-def __init__():
-    pass
-
 def calculate_instantaneous_rate_primary(
     channelPri, snrValues, powerPrimary, powerSecondary,  hardw_ip):
     """Returns the instantaneous achievable rate of the primary user for each SNR value in linear.

@@ -1,5 +1,53 @@
 """
-    This script performs a simulation of a UAV-NOMA system with two users.
+This script performs a simulation of a UAV-NOMA system with two users.
+
+Usage:
+
+```
+uavnoma [-h] [-s SAMPLES] [-p POWER_LOS] [-f FACTOR] [-l LOSS] [-r RADIUS] [-ur RADIUS] [-uh MEAN] [-t1 RATE] [-t2 RATE]
+        [-hi COEFF] [-si COEFF] [-p1 COEFF] [-p2 COEFF] [--snr-min SNR_MIN] [--snr-max SNR_MAX] [--snr-samples NUM]
+        [--seed SEED] [-o FILE] [--plot] [--no-print]
+```
+
+Optional arguments:
+
+```
+  -h, --help            show this help message and exit
+  -s SAMPLES, --monte-carlo-samples SAMPLES
+                        Monte Carlo samples (default: 1000)
+  -p POWER_LOS, --power-los POWER_LOS
+                        Power of line-of-sight path and scattered paths, 1.0 <= POWER_LOS <= 2.0 (default: 2.0)
+  -f FACTOR, --rician-factor FACTOR
+                        Rician factor value, 10<= FACTOR <= 18 (default: 15.0)
+  -l LOSS, --path-loss LOSS
+                        Path loss exponent, 2 <= LOSS <= 3 (default: 2.2)
+  -r RADIUS, --radius-uav RADIUS
+                        Radius fly trajectory of the UAV in meters (default: 2.0)
+  -ur RADIUS, --radius-user RADIUS
+                        Distribution radius of users in the cell in meters (default: 15.0)
+  -uh MEAN, --uav-height-mean MEAN
+                        Average UAV flight height (default: 20.0)
+  -t1 RATE, --target-rate-primary-user RATE
+                        Target rate bits/s/Hertz primary user (default: 0.5)
+  -t2 RATE, --target-rate-secondary-user RATE
+                        Target rate bits/s/Hertz secondary user (default: 0.5)
+  -hi COEFF, --hardw-ip COEFF
+                        Residual Hardware Impairments coefficient, 0 <= COEFF <=1 (default: 0.1)
+  -si COEFF, --sic-ip COEFF
+                        Residual Imperfect SIC coefficient, 0 <= COEFF <=1 (default: 0.1)
+  -p1 COEFF, --power-coeff-primary COEFF
+                        The value of power coefficient allocation of the Primary User (default: 0.8)
+  -p2 COEFF, --power-coeff-secondary COEFF
+                        The value of power coefficient allocation of the Secondary User (default: 0.2)
+  --snr-min SNR_MIN     Minimum / starting SNR in dB (default: 10)
+  --snr-max SNR_MAX     Maximum / finishing SNR in dB (default: 60)
+  --snr-samples NUM     Number of SNR samples between SNR_MIN and SNR_MAX (default: 26)
+  --seed SEED           Seed for pseudo-random number generator (default: None)
+  -o FILE, --output FILE
+                        CSV file where to save simulation data (default: None)
+  --plot                Plot the values of the achievable rate and outage probability (default: False)
+  --no-print            Do not print results to terminal (default: False)
+```
 """
 
 import argparse
@@ -11,6 +59,9 @@ import tabulate as tab
 import uavnoma
 
 def main():
+    """
+    This function is called when the script is invoked with the `uavnoma` command.
+    """
 
     # Create an argument parser
     parser = argparse.ArgumentParser(description='Model of UAV-NOMA system with two users.',
@@ -242,6 +293,9 @@ def main():
         plt.show()
 
 def validate(args):
+    """
+    Validate command line arguments.
+    """
 
     if ( args.monte_carlo_samples < 100 or args.monte_carlo_samples > 100000 ):
         print("Invalid Monte Carlo samples, the value must be (100 <= monte_carlo_samples <= 100000)", file=sys.stderr)
