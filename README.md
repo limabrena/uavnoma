@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/limabrena/uavnoma.svg?branch=main)](https://travis-ci.org/github/limabrena/uavnoma)
 [![codecov](https://codecov.io/gh/limabrena/uavnoma/branch/main/graph/badge.svg?token=H5W453JPYU)](https://app.codecov.io/gh/limabrena/uavnoma)
 
-A Python 3.8 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users under considerations of non-ideal conditions, such as imperfect successive interference cancelation (SIC) and residual hardware impairments (RHI). We consider a uplink UAV-aided NOMA network, as illustrated in the figure below.
+A Python 3.8 implementation of the System Model of Unmanned Aerial Vehicle with Non-Orthogonal Multiple Access (UAV-NOMA) System and 2 ground users under considerations of non-ideal conditions, such as imperfect successive interference cancelation (SIC) and residual hardware impairments (RHI). We consider a downlink UAV-aided NOMA network, as illustrated in the figure below.
 
 ![System model.](https://media.githubusercontent.com/media/limabrena/uavnoma/main/figures/uav_system_model_ex.png)
 
