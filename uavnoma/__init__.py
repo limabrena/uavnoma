@@ -1,6 +1,6 @@
 """
    A Python 3.8 implementation of a model of wireless communication
-   system between an area base station and two users.
+   system between an aerial base station and two users.
    .. include:: ../README.md
    .. include:: ../doc/installationguide.md
    .. include:: ../doc/documentation.md
