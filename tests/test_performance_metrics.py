@@ -37,7 +37,8 @@ data_parameter_rate_valid = [
         0.05,  # imperfect SIC coeffcient
     ) 
 ]
-data_parameter_rate_invalid = [    
+
+""" data_parameter_rate_invalid = [    
     ( 
         4,    # number of users
         np.array([7.0, -16.0]),   # array axis x user 1 and user 2 position
@@ -53,17 +54,17 @@ data_parameter_rate_invalid = [
         0.05,  # hardware impairments
         1.1,   # imperfect SIC coeffcient
     ) 
-]
+] """
 
 data_target_rate_valid = [
     # Target rate primary user, Target rate secondary user
     ([0.5, 0.5])
 ]
 
-data_target_rate_invalid = [
+""" data_target_rate_invalid = [
     # Target rate primary user, Target rate secondary user
     ([2, -4])
-]
+] """
 
 # Test rate primary user (valid parameters)
 @pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip", data_parameter_rate_valid)
@@ -158,10 +159,12 @@ def test_average_rate():
             )
 
     assert system_average_rate.all() >= 0, "Invalid, must be non-negative."
+"""
 
-
-
-def test_outage_probability():
+# Test outage probability (valid parameters)
+@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip", data_parameter_rate_valid)
+@pytest.mark.parametrize("target_rate_primary_user, target_rate_secondary_user", data_target_rate_valid)
+def test_outage_probability(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip, target_rate_primary_user, target_rate_secondary_user):
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
             s, sigma, number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss
@@ -202,4 +205,5 @@ def test_outage_probability():
     assert (
         out_probability_secondary_user.all() >= 0
         or out_probability_secondary_user.all() <= 1
-    ), "Invalid, must be non-negative." """
+    ), "Invalid, must be non-negative." 
+
