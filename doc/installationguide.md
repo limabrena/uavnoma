@@ -2,22 +2,37 @@
 
 ## How to use this application?
 
-### Download
-
-Cloning the repository via terminal:
+### From PyPI
 
 ```
-$ git clone https://github.com/limabrena/uavnoma.git
-$ cd uavnoma
+pip install uavnoma
 ```
 
-Download ZIP file directly in my git repository:
+### From source/GitHub
+
+Directly using pip:
 
 ```
-https://github.com/limabrena/uavnoma/archive/main.zip
+pip install git+https://github.com/limabrena/uavnoma.git#egg=uavnoma
 ```
 
-The user can simply run it from the downloaded folder, provided the necessary requirements are installed. This is the easiest way for the student to be able to study and modify the system model.
+Or each step at a time:
+
+```
+git clone https://github.com/limabrena/uavnoma.git
+cd uavnoma
+pip install .
+```
+
+### Installing for development and/or improving the package
+
+```
+git clone https://github.com/limabrena/uavnoma.git
+cd uavnoma
+pip install -e .[dev]
+```
+
+This way, the package is installed in development mode. As a result, the pytest dependencies/plugins are also installed.
 
 ### Usage
 
