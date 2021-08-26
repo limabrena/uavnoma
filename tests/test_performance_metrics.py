@@ -97,8 +97,8 @@ def test_rate_primary_user(number_user, x_u, y_u, x_r, y_r, uav_height_mean, pat
             )
 
     assert rate_primary_user.all() >= 0  # Non-negative 
-"""
-def test_rate_secondary_user():
+@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip", data_parameter_rate_valid)
+def test_rate_secondary_user(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip):
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
             s,
@@ -111,7 +111,12 @@ def test_rate_secondary_user():
             uav_height_mean,
             path_loss,
         )
-        assert channel_gain_primary <= channel_gain_secondary  # Must be in descending order
+        assert number_user == 2
+        assert sic_ip >= 0 and sic_ip <= 1
+        assert hardw_ip >= 0 and hardw_ip <= 1
+        assert channel_gain_primary <= channel_gain_secondary
+        assert channel_gain_primary >= 0
+        assert channel_gain_secondary >= 0
         for sn in range(0, len(snr_linear)):
             rate_secondary_user[mc,sn] = calculate_instantaneous_rate_secondary(
                 channel_gain_secondary,
@@ -123,8 +128,8 @@ def test_rate_secondary_user():
             )
 
     assert rate_secondary_user.all() >= 0  # Non-negative
-
-def test_average_rate():
+@pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip", data_parameter_rate_valid)
+def test_average_rate(number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip):
     for mc in range(monte_carlo_samples):
         channel_gain_primary, channel_gain_secondary = generate_channel(
             s,
@@ -137,6 +142,12 @@ def test_average_rate():
             uav_height_mean,
             path_loss,
         )
+        assert number_user == 2
+        assert sic_ip >= 0 and sic_ip <= 1
+        assert hardw_ip >= 0 and hardw_ip <= 1
+        assert channel_gain_primary <= channel_gain_secondary
+        assert channel_gain_primary >= 0
+        assert channel_gain_secondary >= 0
         for sn in range(0, len(snr_linear)):
             rate_primary_user[mc, sn] = calculate_instantaneous_rate_primary(
                 channel_gain_primary,
@@ -159,7 +170,7 @@ def test_average_rate():
             )
 
     assert system_average_rate.all() >= 0, "Invalid, must be non-negative."
-"""
+
 
 # Test outage probability (valid parameters)
 @pytest.mark.parametrize("number_user, x_u, y_u, x_r, y_r, uav_height_mean, path_loss, s, sigma, power_primary, power_secondary, hardw_ip, sic_ip", data_parameter_rate_valid)
