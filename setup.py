@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "uavnoma",
-    version = "0.1.1" ,
+    version = "1.0.0" ,
     author = "Brena Lima",
     author_email = "brenakslima@gmail.com",
     description = "UAV-NOMA System Model",
