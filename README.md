@@ -23,7 +23,7 @@ The package contains functions:
 ## Requirements
 
 The implementation requires Python 3.8+ to run.
-The following libraries are required:
+The following libraries are also required:
 
 - `numpy`
 - `matplotlib`
@@ -31,23 +31,39 @@ The following libraries are required:
 - `tabulate`
 - `argparse`
 
-
 ## How to install
 
-To install the *uavnoma* package, running the following command in the uavnoma project folder:
+### From PyPI
 
 ```
-$ pip install -e .[dev]
+pip install uavnoma
 ```
 
-This way, the package is installed in development mode. As a result, the pytest dependencies/plugins are installed.
+### From source/GitHub
 
-
-### From GitHub
+Directly using pip:
 
 ```
-$ git clone https://github.com/limabrena/uavnoma.git
+pip install git+https://github.com/limabrena/uavnoma.git#egg=uavnoma
 ```
+
+Or each step at a time:
+
+```
+git clone https://github.com/limabrena/uavnoma.git
+cd uavnoma
+pip install .
+```
+
+### Installing for development and/or improving the package
+
+```
+git clone https://github.com/limabrena/uavnoma.git
+cd uavnoma
+pip install -e .[dev]
+```
+
+This way, the package is installed in development mode. As a result, the pytest dependencies/plugins are also installed.
 
 ## Documentation
 
