@@ -36,17 +36,13 @@ This way, the package is installed in development mode. As a result, the pytest 
 
 ### Usage
 
-After installing the package, to run the script on your terminal simply run the following command:
+After installing the package, to execute the simulation on your terminal, with default parameters, simply run the following command:
 
 ```
 $ uavnoma
 ```
 
-An example on how to use a package can be seen in the uavnoma folder. The script contains an implementation example of an UAV NOMA system using the *uavnoma* package. 
-
-```
-$ command_line.py
-```
+Use the `-h` or `--help` option to list all the available model parameters. The script code, fully commented, also exemplifies how to use the package functions, for example to develop more complex models or implement different scenarios. The script code is available in the `main()` function in the [`uavnoma/command_line.py`](https://github.com/limabrena/uavnoma/blob/main/uavnoma/command_line.py) file.
 
 ### Documentation
 
