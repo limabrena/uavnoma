@@ -87,7 +87,7 @@ data_params_valid_combination = [
         '-ur', str(ur), '-uh', str(uh), '-t1', str(t1), '-t2', str(t2),
         '-hi', str(hi), '-si', str(si), '-p1', str(p1), '-p2', str(p2),
         '--snr-min', str(snr_min), '--snr-max', str(snr_max),
-        '--snr-samples', str(snr_samples), '--seed', str(seed)
+        '--snr-samples', str(snr_samples), '--seed', str(seed), '--output', 'output_file'
     )
     for s in s_range
     for p in p_range
@@ -148,7 +148,7 @@ def test_success_no_print(script_runner):
 def test_file_creation(script_runner):
     with tempfile.TemporaryDirectory() as tmp:
         output_file = os.path.join(tmp, 'tempfile.csv')
-        result = script_runner.run(script_name, '--output', output_file)
+        result = script_runner.run(script_name, '--output', output_file)        
         assert os.path.exists(output_file) # Check file was created successfully
         assert result.success          # Successful run
         assert result.returncode == 0  # Code 0 means successful run
@@ -161,3 +161,17 @@ def test_success_plot(show, script_runner):
     assert result.success          # Successful run
     assert result.returncode == 0  # Code 0 means successful run
     assert len(result.stderr) == 0 # No output in error output stream
+
+
+def test_default_results(tmp_path,script_runner):
+    with tempfile.TemporaryDirectory() as tmp:
+        output_file = os.path.join(tmp, 'tempfile.csv')
+        result = script_runner.run(script_name, '--output', output_file)    
+        assert result.success          # Successful run         
+        d = tmp_path / "sub"
+        d.mkdir()
+        p = d / output_file
+        q = d / "output_default.csv"
+        p.write_text("tempfile.csv")
+        q.write_text("output_default.csv")
+        assert p.read_text() == q.read_text() 

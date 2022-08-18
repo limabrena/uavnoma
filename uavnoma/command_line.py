@@ -14,7 +14,7 @@ Optional arguments:
 ```
   -h, --help            show this help message and exit
   -s SAMPLES, --monte-carlo-samples SAMPLES
-                        Monte Carlo samples (default: 1000)
+                        Monte Carlo samples (default: 50000)
   -p POWER_LOS, --power-los POWER_LOS
                         Power of line-of-sight path and scattered paths, 1.0 <= POWER_LOS <= 2.0 (default: 2.0)
   -f FACTOR, --rician-factor FACTOR
@@ -32,9 +32,9 @@ Optional arguments:
   -t2 RATE, --target-rate-secondary-user RATE
                         Target rate bits/s/Hertz secondary user (default: 0.5)
   -hi COEFF, --hardw-ip COEFF
-                        Residual Hardware Impairments coefficient, 0 <= COEFF <=1 (default: 0.1)
+                        Residual Hardware Impairments coefficient, 0 <= COEFF <=1 (default: 0.05)
   -si COEFF, --sic-ip COEFF
-                        Residual Imperfect SIC coefficient, 0 <= COEFF <=1 (default: 0.1)
+                        Residual Imperfect SIC coefficient, 0 <= COEFF <=1 (default: 0.05)
   -p1 COEFF, --power-coeff-primary COEFF
                         The value of power coefficient allocation of the Primary User (default: 0.8)
   -p2 COEFF, --power-coeff-secondary COEFF
@@ -69,7 +69,7 @@ def main():
 
     # Specify arguments to parse
     parser.add_argument('-s', '--monte-carlo-samples', type=int, metavar='SAMPLES',
-                        help='Monte Carlo samples', default=1000)
+                        help='Monte Carlo samples', default=50000)
     parser.add_argument('-p', '--power-los', type=float, metavar='POWER_LOS',
                         help='Power of line-of-sight path and scattered paths, 1.0 <= POWER_LOS <= 2.0',
                         default=2.0)
@@ -96,10 +96,10 @@ def main():
                         default=0.5)
     parser.add_argument('-hi', '--hardw-ip', type=float, metavar='COEFF',
                         help='Residual Hardware Impairments coefficient, 0 <= COEFF <=1',
-                        default=0.1)
+                        default=0.05)
     parser.add_argument('-si', '--sic-ip', type=float, metavar='COEFF',
                         help='Residual Imperfect SIC coefficient, 0 <= COEFF <=1',
-                        default=0.1)
+                        default=0.05)
     parser.add_argument('-p1', '--power-coeff-primary', type=float, metavar='COEFF',
                         help='The value of power coefficient allocation of the Primary User',
                         default=0.8)
@@ -117,10 +117,10 @@ def main():
                         default=26)
     parser.add_argument('--seed', type=int, metavar="SEED",
                         help="Seed for pseudo-random number generator",
-                        default = None)
+                        default = 123)
     parser.add_argument('-o', '--output', type=str, metavar='FILE',
                         help='CSV file where to save simulation data',
-                        default=None)
+                        default = 'output.csv')
     parser.add_argument('--plot', action='store_true',
                         help='Plot the values of the achievable rate and outage probability',
                         default=False)
@@ -256,9 +256,9 @@ def main():
                                     'Average\nachievable rate\nPrimary User',
                                     'Average\nachievable rate\nSecondary User']))
 
-    # Save results to file if a filename was specified
+    # Save results to file if a filename was specified 
     if args.output != None:
-        all_data_df.to_csv(args.output, index=False)
+        all_data_df.to_csv(args.output, index=False) 
 
     # Plot simulation results if --plot option was given
     if args.plot:
@@ -367,3 +367,20 @@ def validate(args):
         sys.exit(1)
 
     return args
+
+# def validate_file(args):
+#     """
+#     Validate default results when seed = 123 is considered
+#     """    
+#     if args.seed == 123:       
+#         with open('output.csv', 'r') as t1, open('tests\output_default.csv', 'r') as t2:
+#             file = t1.readlines()
+#             filedefault= t2.readlines()
+#         # If the values are different, a new file is created with the values 
+#         with open('tests/test_file.csv', 'w') as outFile: 
+#             for line in filedefault:
+#                 if line not in file:
+#                     outFile.write(line)    
+
+
+
