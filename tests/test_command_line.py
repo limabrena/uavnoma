@@ -177,18 +177,15 @@ def test_default_results(request, tmp_path, script_runner):
         # Check that script ran successfully
         assert result.success
 
-        # Read output file contents
-        with open(output_fp, "r") as output_file:
-            output_contents = output_file.read()
+        # Read output file contents to a numpy array
+        output_contents = np.loadtxt(output_fp, delimiter=",", skiprows=1)
 
     # Determine the path of the canonical default output file contents
     canonical_fp = os.path.join(request.fspath.dirname, "defaults_seed123.csv")
 
-    # Read canonical default output file contents
-    with open(canonical_fp, "r") as canonical_file:
+    # Read canonical default output file contents to a numpy array
+    canonical_contents = np.loadtxt(canonical_fp, delimiter=",", skiprows=1)
 
-        canonical_contents = canonical_file.read()
-
-    # Check that the canonical file contents are equal to the output file
+    # Check that the canonical file contents are similar to the output file
     # contents
-    assert output_contents == canonical_contents
+    np.testing.assert_allclose(output_contents, canonical_contents)
