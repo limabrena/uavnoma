@@ -83,6 +83,12 @@ This way, the package is installed in development mode. As a result, the pytest 
 * [Developer's guide](https://limabrena.github.io/uavnoma/docs/index.html#developers-guide)
 * [Scenario Description](https://limabrena.github.io/uavnoma/docs/index.html#scenario-description)
 
+## Citation
+
+* Lima, B., Fachada, N., Dinis, R., da Costa, D.B. & Beko, M. (2022). uavnoma: a
+  UAV-NOMA network model under non-ideal conditions. *Journal of Open Research
+  Software*, 10(1), 9. https://doi.org/10.5334/jors.397
+
 ## License
 
 [MIT License](LICENSE.txt)
